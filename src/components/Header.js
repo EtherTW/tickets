@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -6,11 +7,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
+  NavLink
 } from 'reactstrap';
 
 import Logo from './assets/logo.png';
@@ -31,7 +28,7 @@ class Header extends Component {
   render () {
     return (
       <Navbar color="primary" dark expand="md">
-        <NavbarBrand href="/">
+        <NavbarBrand tag={Link} to="/">
           <img className="align-middle d-inline-block" src={Logo} width="40" height="40" alt="Taipei Ethereum Meetup Logo" />
           <span className="align-middle">Tickets</span>
         </NavbarBrand>
@@ -39,10 +36,10 @@ class Header extends Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink href="/components/">報名</NavLink>
+              <NavLink tag={Link} to="/register/">報名</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
+              <NavLink tag={Link} to="/">
                 取回押金
               </NavLink>
             </NavItem>
