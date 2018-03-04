@@ -25,6 +25,14 @@ class AlertHelper extends Component {
           </Alert>
         );
 
+      case 'no-wallet':
+        return (
+          <Alert color="danger">
+            您還沒有錢包，請先在 MetaMask 裏建立錢包。
+          </Alert>
+        );
+
+
       case 'had-ticket':
         return (
           <Alert color="warning">
@@ -32,12 +40,12 @@ class AlertHelper extends Component {
           </Alert>
         );
 
-        case 'no-refund':
-          return (
-            <Alert color="warning">
-              本錢包位址沒有押金，請確認你是否已經領回押金或所使用的錢包是否與當初報名時相同。
-            </Alert>
-          );
+      case 'no-refund':
+        return (
+          <Alert color="warning">
+            本錢包位址沒有押金，請確認你是否已經領回押金或所使用的錢包是否與當初報名時相同。
+          </Alert>
+        );
 
       default:
         return null;
