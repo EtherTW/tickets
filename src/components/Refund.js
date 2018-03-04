@@ -2,9 +2,12 @@ import Eth from 'ethjs';
 import React, { Component } from 'react';
 import { Form, Button, Input } from 'reactstrap';
 
+import AlertHelper from './AlertHelper';
 import {
   CONTRACT_ADDRESS,
-  CONTRACT_ABI
+  CONTRACT_ABI,
+  GAS_LIMIT,
+  GAS_PRICE
 } from '../constants';
 
 class Refund extends Component {
@@ -43,8 +46,35 @@ class Refund extends Component {
   }
 
   onRefund = async () => {
-    const transaction = await this.ticketContract.getRefund(this.state.secret);
+    let eth = new Eth(window.web3.currentProvider);
+    const transaction = await eth.sendTransaction({
+      from: this.state.wallet,
+      to: CONTRACT_ADDRESS,
+      value: 0,
+      gas: GAS_LIMIT,
+      gasPrice: GAS_PRICE,
+      data: this.state.secret
+    });
+
     this.setState({ transaction });
+  }
+
+  renderTransaction () {
+    if (this.state.transaction) {
+      return <AlertHelper state="transaction-sent" transaction={this.state.transaction} />
+    }
+  }
+
+  renderWarning () {
+    if (!this.state.hadTicket && this.state.wallet) {
+      return <AlertHelper state="no-refund" />;
+    }
+  }
+
+  renderError () {
+    if (!this.state.web3) {
+      return (<AlertHelper state="no-web3" />);
+    }
   }
 
   render () {
@@ -60,11 +90,16 @@ class Refund extends Component {
         <div>
           <Form className="w-50">
             <Input value={this.state.secret} onChange={this.onInputChange} />
-            <Button className="mt-3" color="primary" onClick={this.onRefund}>
+            <Button disabled={!this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
               取回押金
             </Button>
           </Form>
 
+          <div className="my-3">
+            {this.renderTransaction()}
+            {this.renderWarning()}
+            {this.renderError()}
+          </div>
         </div>
       </div>
     );

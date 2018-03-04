@@ -1,8 +1,9 @@
 import Eth from 'ethjs';
 import Firebase from 'firebase';
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
+import AlertHelper from './AlertHelper';
 import {
   CONTRACT_ADDRESS,
   CONTRACT_ABI,
@@ -54,7 +55,7 @@ class Register extends Component {
         this.setState({ wallet, hadTicket: result[0] });
       }
     } else {
-      this.setState({metamask: false});
+      this.setState({web3: false});
     }
   }
 
@@ -86,38 +87,19 @@ class Register extends Component {
 
   renderTransaction () {
     if (this.state.transaction) {
-      const url = `https://ropsten.etherscan.io/tx/${this.state.transaction}`;
-      return (
-        <div className="my-3">
-          <Alert color="success">
-            你的交易已經發送，請到 <a href={url} target="_blank">Etherscan</a> 查詢交易是否成功。
-          </Alert>
-        </div>
-      )
+      return (<AlertHelper transaction={this.state.transaction} state="transaction-sent" />);
     }
   }
 
   renderError () {
     if (!this.state.web3) {
-      return (
-        <div className="my-3">
-          <Alert color="danger">
-            您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {DEPOSIT + 0.001} ETH （押金與給礦工的交易費）。
-          </Alert>
-        </div>
-      );
+      return (<AlertHelper state="no-web3" />);
     }
   }
 
   renderWarning () {
     if (this.state.hadTicket) {
-      return (
-        <div className="my-3">
-          <Alert color="warning">
-            本錢包位址已經報名，當天請出示寄給您的電子郵件即可。
-          </Alert>
-        </div>
-      );
+      return (<AlertHelper state="had-ticket" />);
     }
   }
 
@@ -144,9 +126,11 @@ class Register extends Component {
         </Form>
         <Button disabled={this.state.hadTicket || !this.state.wallet} color="primary" onClick={this.onSend}>使用 MetaMask 送出押金</Button>
 
-        {this.renderError()}
-        {this.renderWarning()}
-        {this.renderTransaction()}
+        <div className="my-3">
+          {this.renderError()}
+          {this.renderWarning()}
+          {this.renderTransaction()}
+        </div>
       </div>
     );
   }

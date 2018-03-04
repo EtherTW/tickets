@@ -5,3 +5,8 @@ export const CONTRACT_ABI = JSON.parse('[{ "constant": true, "inputs": [{ "name"
 export const GAS_PRICE = Eth.toWei(21, 'Gwei');
 export const GAS_LIMIT = 70000;
 export const DEPOSIT = 0.001;
+export const PRODUCTION = false;
+
+export const ETHERSCAN_URL = PRODUCTION ?
+  'https://etherscan.io/tx' :
+  'https://ropsten.etherscan.io/tx';
