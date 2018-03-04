@@ -4,9 +4,7 @@ node_js:
 
 script: yarn run build
 
-cache:
-  directories:
-    - "node_modules"
+cache: yarn
 
 deploy:
   provider: pages
