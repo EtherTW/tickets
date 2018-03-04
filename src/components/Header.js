@@ -39,7 +39,7 @@ class Header extends Component {
               <NavLink tag={Link} to="/register/">報名</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/">
+              <NavLink tag={Link} to="/refund">
                 取回押金
               </NavLink>
             </NavItem>

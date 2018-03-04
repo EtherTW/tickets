@@ -3,8 +3,14 @@ import Firebase from 'firebase';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 
-const contractAddress = '0xd182db77ac90d77646b895be09e59690e4fa68e1';
-const ABI = JSON.parse('[{ "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "ticket", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "puzzle", "outputs": [{ "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_attendees", "type": "address" }], "name": "getTicket", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_owner", "type": "address" }], "name": "transferOwner", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_secret", "type": "bytes" }], "name": "calculatePuzzle", "outputs": [{ "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "DEPOSIT", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_secret", "type": "bytes" }], "name": "getRefund", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_puzzle", "type": "bytes32" }], "name": "setPuzzle", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }]');
+import {
+  CONTRACT_ADDRESS,
+  CONTRACT_ABI,
+  GAS_PRICE,
+  GAS_LIMIT,
+  DEPOSIT
+} from '../constants';
+
 const firebaseConfig = {
   apiKey: "AIzaSyCIP2W4I3aA9AOuvXpUpQLzFBmwvo3lQy8",
   authDomain: "taipei-ethereum-meetup-ticket.firebaseapp.com",
@@ -12,7 +18,7 @@ const firebaseConfig = {
   projectId: "taipei-ethereum-meetup-ticket",
   storageBucket: "taipei-ethereum-meetup-ticket.appspot.com",
   messagingSenderId: "515416889778"
-}
+};
 
 class Register extends Component {
   constructor (props) {
@@ -22,12 +28,10 @@ class Register extends Component {
       wallet: '',
       transaction: '',
       hadTicket: false,
-      metamask: true,
+      web3: true,
       name: '',
       email: ''
     };
-
-    this.deposit = 0.001;
   }
 
   async componentDidMount () {
@@ -38,14 +42,14 @@ class Register extends Component {
       this.firebase = Firebase.apps[0];
     }
 
-    // Initial with metamask
+    // Initial with web3
     if (typeof window.web3 !== 'undefined') {
       let eth = new Eth(window.web3.currentProvider);
       const accounts = await eth.accounts();
       if (accounts.length > 0) {
         const wallet = accounts[0];
-        const Ticket = eth.contract(ABI);
-        const ticket = Ticket.at(contractAddress);
+        const Ticket = eth.contract(CONTRACT_ABI);
+        const ticket = Ticket.at(CONTRACT_ADDRESS);
         const result = await ticket.ticket(wallet);
         this.setState({ wallet, hadTicket: result[0] });
       }
@@ -58,10 +62,10 @@ class Register extends Component {
     let eth = new Eth(window.web3.currentProvider);
     const transaction = await eth.sendTransaction({
       from: this.state.wallet,
-      to: contractAddress,
-      value: Eth.toWei(this.deposit, 'ether'),
-      gas: 70000,
-      gasPrice: Eth.toWei(21, 'Gwei'),
+      to: CONTRACT_ADDRESS,
+      value: Eth.toWei(DEPOSIT, 'ether'),
+      gas: GAS_LIMIT,
+      gasPrice: GAS_PRICE,
       data: '0x'
     });
     await this.firebase.database().ref(`users/${this.state.wallet}`).set({
@@ -94,11 +98,11 @@ class Register extends Component {
   }
 
   renderError () {
-    if (!this.state.metamask) {
+    if (!this.state.web3) {
       return (
         <div className="my-3">
           <Alert color="danger">
-            您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {this.deposit + 0.001} ETH （押金與給礦工的交易費）。
+            您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {DEPOSIT + 0.001} ETH （押金與給礦工的交易費）。
           </Alert>
         </div>
       );
@@ -122,7 +126,7 @@ class Register extends Component {
       <div>
         <h2>報名</h2>
         <p>
-          本次報名採押金制，我們將透過智能合約 (Smart Contract) 收取押金 {this.deposit} ETH 並於您參加活動後退回。在填寫表單前，請先安裝 MetaMask，並且填寫下面表單。
+          本次報名採押金制，我們將透過智能合約 (Smart Contract) 收取押金 {DEPOSIT} ETH 並於您參加活動後退回。在填寫表單前，請先安裝支援 web3 的瀏覽器或延伸套件，桌面版的 Chrome 或 Firefox 請安裝 MetaMask，手機請安裝 Cipher 或 True 後並填寫下面表單。
         </p>
         <Form className="w-50">
           <FormGroup>
