@@ -138,7 +138,7 @@ class Register extends Component {
             <Input plaintext name="wallet" id="wallet">{this.state.wallet}</Input>
           </FormGroup>
         </Form>
-        <Button disabled={this.state.hadTicket || !this.state.transaction} color="primary" onClick={this.onSend}>使用 MetaMask 送出押金</Button>
+        <Button disabled={this.state.hadTicket || !this.state.wallet} color="primary" onClick={this.onSend}>使用 MetaMask 送出押金</Button>
 
         {this.renderError()}
         {this.renderWarning()}
