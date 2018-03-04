@@ -1,7 +1,7 @@
 import Eth from 'ethjs';
 import Firebase from 'firebase';
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText, Alert } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 
 const contractAddress = '0xd182db77ac90d77646b895be09e59690e4fa68e1';
 const ABI = JSON.parse('[{ "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "ticket", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "puzzle", "outputs": [{ "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_attendees", "type": "address" }], "name": "getTicket", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_owner", "type": "address" }], "name": "transferOwner", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [{ "name": "", "type": "address" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "_secret", "type": "bytes" }], "name": "calculatePuzzle", "outputs": [{ "name": "", "type": "bytes32" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "DEPOSIT", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "_secret", "type": "bytes" }], "name": "getRefund", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "_puzzle", "type": "bytes32" }], "name": "setPuzzle", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }]');
@@ -60,7 +60,7 @@ class Register extends Component {
       gasPrice: Eth.toWei(21, 'Gwei'),
       data: '0x'
     });
-    const result = this.firebase.database().ref(`users/${this.state.wallet}`).set({
+    await this.firebase.database().ref(`users/${this.state.wallet}`).set({
       name: this.state.name,
       email: this.state.email,
       transaction
@@ -94,7 +94,7 @@ class Register extends Component {
       return (
         <div className="my-3">
           <Alert color="danger">
-            您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank">官方網站</a> 安裝並且儲值至少約 {this.deposit + 0.001} ETH （押金與給礦工的交易費）。
+            您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {this.deposit + 0.001} ETH （押金與給礦工的交易費）。
           </Alert>
         </div>
       );
