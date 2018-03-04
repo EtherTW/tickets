@@ -74,6 +74,8 @@ class Refund extends Component {
   renderError () {
     if (!this.state.web3) {
       return (<AlertHelper state="no-web3" />);
+    } else if (!this.state.wallet) {
+      return (<AlertHelper state="no-wallet" />);
     }
   }
 
