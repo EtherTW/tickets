@@ -32,7 +32,11 @@ class Register extends Component {
 
   async componentDidMount () {
     // Initial firebase
-    this.firebase = Firebase.initializeApp(firebaseConfig);
+    if (Firebase.apps.length === 0) {
+      this.firebase = Firebase.initializeApp(firebaseConfig);
+    } else {
+      this.firebase = Firebase.apps[0];
+    }
 
     // Initial with metamask
     if (typeof window.web3 !== 'undefined') {

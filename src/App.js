@@ -10,7 +10,7 @@ import Register from './components/Register';
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router basename="/tickets">
         <div className="App">
           <Header />
           <Container className="py-3">
