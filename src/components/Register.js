@@ -12,7 +12,9 @@ import {
   CONTRACT_ABI,
   GAS_PRICE,
   GAS_LIMIT,
-  DEPOSIT
+  DEPOSIT,
+  NETWORK_ID,
+  INTERVAL_TIME,
 } from '../constants';
 
 class Register extends Component {
@@ -25,7 +27,8 @@ class Register extends Component {
       web3: null,
       name: null,
       email: null,
-      initialized: false
+      initialized: false,
+      validNetwork: false
     };
   }
 
@@ -36,6 +39,8 @@ class Register extends Component {
         const web3 = window.web3
         newState.web3 = web3
         if (web3) {
+          const networkId = web3.version.network
+          newState.validNetwork = (networkId === NETWORK_ID)
           const eth = new Eth(window.web3.currentProvider);
           const accounts = await eth.accounts();
           const wallet = accounts[0];
@@ -57,7 +62,7 @@ class Register extends Component {
         newState.initialized = true;
         this.setState({...this.state, ...newState})
       }
-    }, 3000);
+    }, INTERVAL_TIME);
   }
 
   componentWillUnmount() {
@@ -100,21 +105,19 @@ class Register extends Component {
     this.setState({ email: event.target.value });
   }
 
-  renderTransaction () {
+  renderAlert = () => {
+    if (!this.state.web3) {
+      return (<AlertHelper state="no-web3" />);
+    }
+    if (!this.state.validNetwork) {
+      return (<AlertHelper state="invalid-network" />);
+    }
+    if (!this.state.wallet) {
+      return (<AlertHelper state="no-wallet" />);
+    }
     if (this.state.transaction) {
       return (<AlertHelper transaction={this.state.transaction} state="transaction-sent" />);
     }
-  }
-
-  renderError () {
-    if (!this.state.web3) {
-      return (<AlertHelper state="no-web3" />);
-    } else if (!this.state.wallet) {
-      return (<AlertHelper state="no-wallet" />);
-    }
-  }
-
-  renderWarning () {
     if (this.state.hadTicket) {
       return (<AlertHelper state="had-ticket" />);
     }
@@ -151,13 +154,11 @@ class Register extends Component {
               )
             }
           </Form>
-          <Button disabled={this.state.hadTicket || !this.state.wallet} color="primary" onClick={this.onSend}>
+          <Button disabled={this.state.hadTicket || !this.state.wallet || !this.state.wallet || !this.state.validNetwork} color="primary" onClick={this.onSend}>
             {intl.formatMessage({ id: 'Register With MetaMask' })}
           </Button>
           <div className="my-3">
-            {this.state.initialized && this.renderError()}
-            {this.state.initialized && this.renderWarning()}
-            {this.state.initialized && this.renderTransaction()}
+            {this.state.initialized && this.renderAlert()}
           </div>
         </Container>
       </div>

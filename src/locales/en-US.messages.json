@@ -24,5 +24,6 @@
   "Alert No Wallet": "You have no wallet available in Metamask. Please log in to MetaMask and refresh.",
   "Alert Had Ticket": "This wallet address is already registered. Please show your email to the staff in the event.",
   "Alert No Refund": "There is no deposit from this wallet address recorded. Please make sure you have not yet refunded and you use the same wallet address as the one in registration.",
-  "Alert No Attend": "You can only be able to refund after the event with attendance. Please wait until the event has finished and our organiser will update the smart contract to enable refund."
+  "Alert No Attend": "You can only be able to refund after the event with attendance. Please wait until the event has finished and our organiser will update the smart contract to enable refund.",
+  "Alert Invalid Network": "Please connect to the mainnet on Metamask."
 }

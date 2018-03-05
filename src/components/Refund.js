@@ -9,7 +9,9 @@ import {
   CONTRACT_ADDRESS,
   CONTRACT_ABI,
   GAS_LIMIT,
-  GAS_PRICE
+  GAS_PRICE,
+  NETWORK_ID,
+  INTERVAL_TIME,
 } from '../constants';
 
 class Refund extends Component {
@@ -22,35 +24,52 @@ class Refund extends Component {
       transaction: '',
       hadTicket: false,
       initialized: false,
-      attended: false
+      attended: false,
+      validNetwork: false
     };
   }
 
   async componentDidMount() {
-    const newState = {};
-    // Initial with metamask
-    if (typeof window.web3 !== 'undefined') {
-      let eth = new Eth(window.web3.currentProvider);
-      const accounts = await eth.accounts();
-      if (accounts.length > 0) {
-        const wallet = accounts[0];
-        const Ticket = eth.contract(CONTRACT_ABI);
-        const ticket = Ticket.at(CONTRACT_ADDRESS);
-        const result = await ticket.userId(wallet);
-        const userId = result[0];
-        const hadTicket = userId > 0;
-        const attended = await ticket.isAttend(userId);
-        this.ticketContract = ticket;
-        newState.wallet = wallet;
-        newState.hadTicket = hadTicket;
-        newState.attended = attended[0];
-      }
-    } else {
-      newState.web3 = true;
-    }
 
-    newState.initialized = true;
-    this.setState(newState);
+    this.checkWeb3IntervalId = setInterval(async () => {
+      const newState = {};
+      try {
+        const web3 = window.web3
+        newState.web3 = web3
+        if (web3) {
+          const networkId = web3.version.network
+          newState.validNetwork = (networkId === NETWORK_ID)
+          const eth = new Eth(window.web3.currentProvider);
+          const accounts = await eth.accounts();
+          const wallet = accounts[0];
+          newState.wallet = wallet;
+          if (wallet) {
+            const Ticket = eth.contract(CONTRACT_ABI);
+            const ticket = Ticket.at(CONTRACT_ADDRESS);
+            const result = await ticket.userId(wallet);
+            const userId = result[0];
+            const hadTicket = result[0] > 0;
+            newState.hadTicket = hadTicket;
+            const attended = await ticket.isAttend(userId);
+            newState.attended = attended[0];
+          } else {
+            newState.hadTicket = false;
+            newState.attended = false;
+          }
+        }
+        newState.initialized = true;
+        this.setState({...this.state, ...newState})
+      } catch (error) {
+        newState.web3 = false;
+        newState.initialized = true;
+        this.setState({...this.state, ...newState})
+      }
+    }, INTERVAL_TIME);
+
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.checkWeb3IntervalId);
   }
 
   onRefund = async () => {
@@ -72,34 +91,28 @@ class Refund extends Component {
     this.setState({ transaction });
   }
 
-  renderTransaction() {
+  renderAlert = () => {
+    if (!this.state.web3) {
+      return (<AlertHelper state="no-web3" />);
+    }
+    if (!this.state.validNetwork) {
+      return (<AlertHelper state="invalid-network" />);
+    }
+    if (!this.state.wallet) {
+      return (<AlertHelper state="no-wallet" />);
+    }
+    if (!this.state.attended) {
+      return (<AlertHelper state="no-attend" />)
+    }
+    if (!this.state.hadTicket) {
+      return <AlertHelper state="no-refund" />;
+    }
     if (this.state.transaction) {
       return <AlertHelper state="transaction-sent" transaction={this.state.transaction} />
     }
   }
 
-  renderWarning() {
-    if (!this.state.hadTicket && this.state.wallet) {
-      return <AlertHelper state="no-refund" />;
-    }
-
-    if (!this.state.attended && this.state.initialized) {
-      return (<AlertHelper state="no-attend" />)
-    }
-  }
-
-  renderError() {
-    if (!this.state.web3) {
-      return (<AlertHelper state="no-web3" />);
-    } else if (!this.state.wallet) {
-      return (<AlertHelper state="no-wallet" />);
-    }
-  }
-
   renderAttended() {
-    if (!this.state.initialized) {
-      return '';
-    }
     const intl = this.props.intl
     return intl.formatMessage({ id: this.state.attended ? 'Attened' : 'Not Yet Attended' });
   }
@@ -113,28 +126,17 @@ class Refund extends Component {
           <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
         </SectionHeader>
         <Container className='py-3'>
-          {
-            this.state.transaction && (
-              <p>
-                {intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}
-              </p>
-            )
-          }
-          <p>
-            {intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong>
-          </p>
+          {this.state.transaction && <p>{intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}</p>}
+          {this.state.initialized && <p>{intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong></p>}
           <div>
             <Form className="w-50">
               <Input value={this.state.secret} onChange={this.onInputChange} />
-              <Button disabled={!this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
+              <Button disabled={!this.state.attended || !this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
                 {intl.formatMessage({ id: 'Refund' })}
               </Button>
             </Form>
-
             <div className="my-3">
-              {this.renderTransaction()}
-              {this.renderWarning()}
-              {this.renderError()}
+              {this.state.initialized && this.renderAlert()}
             </div>
           </div>
         </Container>

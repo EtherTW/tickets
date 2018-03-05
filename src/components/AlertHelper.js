@@ -55,7 +55,12 @@ class AlertHelper extends Component {
             {intl.formatMessage({ id: 'Alert No Attend' })}
           </Alert>
         )
-
+      case 'invalid-network':
+        return (
+          <Alert color="danger">
+            {intl.formatMessage({ id: 'Alert Invalid Network' })}
+          </Alert>
+        )
       default:
         return null;
     }

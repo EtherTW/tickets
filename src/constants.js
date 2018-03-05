@@ -6,6 +6,8 @@ export const GAS_PRICE = Eth.toWei(21, 'Gwei');
 export const GAS_LIMIT = 70000;
 export const DEPOSIT = 0.001;
 export const PRODUCTION = false;
+export const NETWORK_ID = '3'; // 1 = mainnet, 3 = ropsten
+export const INTERVAL_TIME = 1000;
 
 export const ETHERSCAN_URL = PRODUCTION ?
   'https://etherscan.io' :
