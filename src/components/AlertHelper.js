@@ -10,26 +10,29 @@ import {
 class AlertHelper extends Component {
   render () {
     const intl = this.props.intl
+    console.log(intl)
     const url = `${ETHERSCAN_URL}/tx/${this.props.transaction}`;
     switch (this.props.state) {
       case 'transaction-sent':
         return (
           <Alert color="success">
-            你的交易已經發送，請到 <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a> 查詢交易是否成功。
+            {intl.locale === 'en-US' && (<div>Your transaction has been sent. Please check the transaction status on <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>.</div>)}
+            {intl.locale === 'zh-Hans-CN' && (<div>你的交易已經發送，請到 <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a> 查詢交易是否成功。</div>)}
           </Alert>
         );
 
       case 'no-web3':
         return (
           <Alert color="danger">
-            您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {DEPOSIT + 0.001} ETH （押金與給礦工的交易費）。
+            {intl.locale === 'en-US' && (<div>You have not yet installed MetaMask. Please go to install <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">MetaMask</a> and have at least {DEPOSIT + 0.001} ETH for the deposit and transaction fee.</div>)}
+            {intl.locale === 'zh-Hans-CN' && (<div>您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {DEPOSIT + 0.001} ETH （押金與給礦工的交易費）。</div>)}
           </Alert>
         );
 
       case 'no-wallet':
         return (
           <Alert color="danger">
-            您還沒有錢包，請先在 MetaMask 裏建立錢包。
+            {intl.formatMessage({ id: 'Alert No Wallet' })}
           </Alert>
         );
 
@@ -37,20 +40,20 @@ class AlertHelper extends Component {
       case 'had-ticket':
         return (
           <Alert color="warning">
-            本錢包位址已經報名，當天請出示寄給您的電子郵件即可。
+            {intl.formatMessage({ id: 'Alert Had Ticket' })}
           </Alert>
         );
 
       case 'no-refund':
         return (
           <Alert color="warning">
-            本錢包位址沒有押金，請確認你是否已經領回押金或所使用的錢包是否與當初報名時相同。
+            {intl.formatMessage({ id: 'Alert No Refund' })}
           </Alert>
         );
       case 'no-attend':
         return (
           <Alert color="warning">
-            區塊鏈上尚未紀錄您的活動出席狀況前無法退還押金，請等候活動結束後主辦單位更新資訊至智能合約。
+            {intl.formatMessage({ id: 'Alert No Attend' })}
           </Alert>
         )
 

@@ -17,5 +17,12 @@
   "Wallet Address": "錢包地址",
   "refundDescription": "活動結束後你可以透過在活動報到時所取得的驗證碼取回押金，請在下面輸入驗證碼。",
   "Transaction": "交易",
-  "Register With MetaMask" : "使用 MetaMask 送出押金"
+  "Register With MetaMask" : "使用 MetaMask 送出押金",
+  "Event Status": "活動參加狀況",
+  "Attended": "確認出席活動",
+  "Not Yet Attended": "尚未出席活動",
+  "Alert No Wallet": "您還沒有錢包，請先在 MetaMask 裏建立錢包。",
+  "Alert Had Ticket": "本錢包位址已經報名，當天請出示寄給您的電子郵件即可。",
+  "Alert No Refund": "本錢包位址沒有押金，請確認你是否已經領回押金或所使用的錢包是否與當初報名時相同。",
+  "Alert No Attend": "區塊鏈上尚未紀錄您的活動出席狀況前無法退還押金，請等候活動結束後主辦單位更新資訊至智能合約。"
 }

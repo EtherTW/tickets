@@ -54,17 +54,17 @@ class Header extends Component {
           <Nav navbar>
             <NavItem>
               <NavLink tag={Link} to="/register/">
-                {intl.formatMessage({ id: 'Register', defaultMessage: 'Register' })}
+                {intl.formatMessage({ id: 'Register' })}
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to="/refund">
-                {intl.formatMessage({ id: 'Refund', defaultMessage: 'Refund' })}
+                {intl.formatMessage({ id: 'Refund' })}
               </NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                {intl.formatMessage({ id: 'Language', defaultMessage: 'Language' })}
+                {intl.formatMessage({ id: 'Language' })}
               </DropdownToggle>
               <DropdownMenu >
                 <DropdownItem onClick={this.handleEnglishItemOnClick}>

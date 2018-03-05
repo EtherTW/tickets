@@ -94,8 +94,8 @@ class Refund extends Component {
     if (!this.state.initialized) {
       return '';
     }
-
-    return this.state.attended ? '確認出席活動' : '尚未出席活動';
+    const intl = this.props.intl
+    return intl.formatMessage({ id: this.state.attended ? 'Attened' : 'Not Yet Attended' });
   }
 
   render () {
@@ -105,10 +105,10 @@ class Refund extends Component {
         <h2>{intl.formatMessage({ id: 'Refund' })}</h2>
         <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
         <p>
-          {intl.formatMessage({ id: 'Transaction' })} {this.state.transaction}
+          {intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}
         </p>
         <p>
-          活動參加狀況：<strong>{this.renderAttended()}</strong>
+          {intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong>
         </p>
         <div>
           <Form className="w-50">
