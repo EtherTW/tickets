@@ -75,6 +75,10 @@ class Refund extends Component {
     if (!this.state.hadTicket && this.state.wallet) {
       return <AlertHelper state="no-refund" />;
     }
+
+    if (!this.state.attended && this.state.initialized) {
+      return (<AlertHelper state="no-attend" />)
+    }
   }
 
   renderError () {
@@ -105,7 +109,7 @@ class Refund extends Component {
         </p>
         <div>
           <Form className="w-50">
-            <Button disabled={!this.state.hadTicket || !!this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
+            <Button disabled={!this.state.attended || !!this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
               取回押金
             </Button>
           </Form>

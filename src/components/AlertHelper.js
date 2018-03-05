@@ -47,6 +47,13 @@ class AlertHelper extends Component {
           </Alert>
         );
 
+      case 'no-attend':
+        return (
+          <Alert color="warning">
+            區塊鏈上尚未紀錄您的活動出席狀況前無法退還押金，請等候活動結束後主辦單位更新資訊至智能合約。
+          </Alert>
+        )
+
       default:
         return null;
     }
