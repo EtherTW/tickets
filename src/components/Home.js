@@ -35,7 +35,7 @@ class Home extends Component {
               <tr>
                 <td>19:30 - 20:10</td>
                 <td>Panel 1: Sharding Clients</td>
-                <td>Peter, Piper, one from prasmatic lab, one from parity, one from status, one from consensys, (+Vitalik?)</td>
+                <td>TBD</td>
                 <td><a href="https://twitter.com/karl_dot_tech" target="_blank" rel="noopener noreferrer">Karl Floersch</a></td>
               </tr>
               <tr>
@@ -47,7 +47,7 @@ class Home extends Component {
               <tr>
                 <td>20:25 - 21:05</td>
                 <td>Panel 2: Ethereum Research Work</td>
-                <td>Vitalik, Justin, Vlad, Phil, Joseph P (if he comes)</td>
+                <td>TBD</td>
                 <td><a href="https://twitter.com/karl_dot_tech" target="_blank" rel="noopener noreferrer">Karl Floersch</a></td>
               </tr>
             </tbody>
