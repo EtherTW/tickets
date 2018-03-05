@@ -16,10 +16,6 @@ addLocaleData(enUS.data)
 
 class App extends Component {
 
-  constructor(props, context) {
-    super(props, context)
-  }
-
   getLocale =() => {
     const lang = localStorage.getItem('lang')
     switch (lang) {

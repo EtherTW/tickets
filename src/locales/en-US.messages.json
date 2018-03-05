@@ -1,5 +1,21 @@
 {
-  "register": "Register",
-  "refund": "Refund",
-  "language": "Language"
+  "Register": "Register",
+  "Refund": "Refund",
+  "Language": "Language",
+  "eventTitle": "Ethereum 全明星技術座談",
+  "eventDescription": "Taipei Ethereum Meetup 社群邀起到了 Ethereum 區塊鏈生態系中擔任不同角色的開發者與研究人員來台展開兩場座談會，其中內容包括了擴展性方案 Sharding client 以及當下的開發與研究進度座談。",
+  "eventPayment": "本活動為免費活動，但將透過 Ethereum 智能合約收取 Ether 押金，當天出席活動後將會退還押金。",
+  "Agenda": "Agenda",
+  "eventDate": "本活動將於 2018/3/21 週三晚間舉辦，活動大綱如下：",
+  "Time": "Time",
+  "Topic": "Topic",
+  "Guests": "Guests",
+  "Host": "Host",
+  "registerDescription": "本次報名採押金制，我們將透過智能合約 (Smart Contract) 收取押金 {deposit} ETH 並於您參加活動後退回。在填寫表單前，請先安裝支援 web3 的瀏覽器或延伸套件，桌面版的 Chrome 或 Firefox 請安裝 MetaMask，手機請安裝 Cipher 或 True 後並填寫下面表單。",
+  "Name / Nickname": "Name / Nickname",
+  "Email": "Email",
+  "Wallet Address": "Wallet Address",
+  "refundDescription": "活動結束後你可以透過在活動報到時所取得的驗證碼取回押金，請在下面輸入驗證碼。",
+  "Transaction": "Transaction",
+  "Register With MetaMask" : "Register With MetaMask"
 }

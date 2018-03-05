@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
+import { injectIntl } from 'react-intl'
 
 import {
   ETHERSCAN_URL,
@@ -8,8 +9,9 @@ import {
 
 class AlertHelper extends Component {
   render () {
+    const intl = this.props.intl
+    console.log(intl)
     const url = `${ETHERSCAN_URL}/${this.props.transaction}`;
-
     switch (this.props.state) {
       case 'transaction-sent':
         return (
@@ -53,4 +55,4 @@ class AlertHelper extends Component {
   }
 }
 
-export default AlertHelper;
+export default injectIntl(AlertHelper);

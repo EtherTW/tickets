@@ -1,6 +1,7 @@
 import Eth from 'ethjs';
 import React, { Component } from 'react';
 import { Form, Button, Input } from 'reactstrap';
+import { injectIntl } from 'react-intl'
 
 import AlertHelper from './AlertHelper';
 import {
@@ -80,20 +81,19 @@ class Refund extends Component {
   }
 
   render () {
+    const intl = this.props.intl
     return (
       <div>
-        <h2>取回押金</h2>
+        <h2>{intl.formatMessage({ id: 'Refund' })}</h2>
+        <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
         <p>
-          活動結束後你可以透過在活動報到時所取得的驗證碼取回押金，請在下面輸入驗證碼。
-        </p>
-        <p>
-          Transaction: {this.state.transaction}
+          {intl.formatMessage({ id: 'Transaction' })} {this.state.transaction}
         </p>
         <div>
           <Form className="w-50">
             <Input value={this.state.secret} onChange={this.onInputChange} />
             <Button disabled={!this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
-              取回押金
+              {intl.formatMessage({ id: 'Refund' })}
             </Button>
           </Form>
 
@@ -108,4 +108,4 @@ class Refund extends Component {
   }
 }
 
-export default Refund;
+export default injectIntl(Refund);
