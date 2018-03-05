@@ -19,37 +19,45 @@ class Register extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      wallet: '',
-      transaction: '',
+      wallet: null,
+      transaction: null,
       hadTicket: false,
-      web3: true,
-      name: '',
-      email: '',
+      web3: null,
+      name: null,
+      email: null,
       initialized: false
     };
   }
 
   componentDidMount () {
-    const newState = {};
     this.checkWeb3IntervalId = setInterval(async () => {
-      if (typeof window.web3 !== 'undefined') {
-        let eth = new Eth(window.web3.currentProvider);
-        const accounts = await eth.accounts();
-        if (accounts[0] !== this.state.wallet) {
+      const newState = {};
+      try {
+        const web3 = window.web3
+        newState.web3 = web3
+        if (web3) {
+          const eth = new Eth(window.web3.currentProvider);
+          const accounts = await eth.accounts();
           const wallet = accounts[0];
-          const Ticket = eth.contract(CONTRACT_ABI);
-          const ticket = Ticket.at(CONTRACT_ADDRESS);
-          const result = await ticket.userId(wallet);
-          const hadTicket = result[0] > 0;
           newState.wallet = wallet;
-          newState.hadTicket = hadTicket;
-          this.setState(newState)
+          if (wallet) {
+            const Ticket = eth.contract(CONTRACT_ABI);
+            const ticket = Ticket.at(CONTRACT_ADDRESS);
+            const result = await ticket.userId(wallet);
+            const hadTicket = result[0] > 0;
+            newState.hadTicket = hadTicket;
+          } else {
+            newState.hadTicket = false;
+          }
         }
-      } else {
+        newState.initialized = true;
+        this.setState({...this.state, ...newState})
+      } catch (error) {
         newState.web3 = false;
-        this.setState(newState)
+        newState.initialized = true;
+        this.setState({...this.state, ...newState})
       }
-    }, 1000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -128,11 +136,11 @@ class Register extends Component {
           <Form className="w-50">
             <FormGroup>
               <Label for="name">{intl.formatMessage({ id: 'Name / Nickname' })}</Label>
-              <Input type="text" name="name" id="name" value={this.state.name} onChange={this.onNameChange} />
+              <Input type="text" name="name" id="name" value={this.state.name || ''} onChange={this.onNameChange} />
             </FormGroup>
             <FormGroup>
               <Label for="email">{intl.formatMessage({ id: 'Email' })}</Label>
-              <Input type="email" name="email" id="email" value={this.state.email} onChange={this.onEmailChange} />
+              <Input type="email" name="email" id="email" value={this.state.email || ''} onChange={this.onEmailChange} />
             </FormGroup>
             {
               this.state.wallet && (
@@ -147,9 +155,9 @@ class Register extends Component {
             {intl.formatMessage({ id: 'Register With MetaMask' })}
           </Button>
           <div className="my-3">
-            {this.renderError()}
-            {this.renderWarning()}
-            {this.renderTransaction()}
+            {this.state.initialized && this.renderError()}
+            {this.state.initialized && this.renderWarning()}
+            {this.state.initialized && this.renderTransaction()}
           </div>
         </Container>
       </div>
