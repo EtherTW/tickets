@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button } from 'reactstrap';
 import { injectIntl } from 'react-intl'
+import { Container } from 'reactstrap';
+import SectionHeader from './SectionHeader';
+import Logo from './assets/logo.png';
 
 class Home extends Component {
   render () {
     const intl = this.props.intl
     return (
       <div>
-        <div>
+        <SectionHeader>
+          <img
+            className="align-middle d-inline-block"
+            src={Logo}
+            width="100"
+            alt="Taipei Ethereum Meetup Logo"
+            style={{
+              marginBottom: '24px',
+            }}
+          />
           <h2>{intl.formatMessage({ id: 'eventTitle' })}</h2>
           <p>{intl.formatMessage({ id: 'eventDescription' })}</p>
+          <Button tag={Link} to="/register" color="primary" size="lg">{intl.formatMessage({ id: 'Register' })}</Button>
+        </SectionHeader>
+        <Container className='py-3'>
           <p>{intl.formatMessage({ id: 'eventPayment' })}</p>
-          <h3>Agenda</h3>
           <p>{intl.formatMessage({ id: 'eventDate' })}</p>
           <Table>
             <thead>
@@ -50,10 +64,7 @@ class Home extends Component {
               </tr>
             </tbody>
           </Table>
-        </div>
-        <div className="text-center">
-          <Button tag={Link} to="/register" color="primary" size="lg">{intl.formatMessage({ id: 'Register' })}</Button>
-        </div>
+        </Container>
       </div>
     );
   }

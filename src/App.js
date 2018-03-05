@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Container } from 'reactstrap';
 import { addLocaleData, IntlProvider } from 'react-intl'
 import enUS from './locales/en-US'
 import zhHANT from './locales/zh-Hant'
@@ -34,11 +33,9 @@ class App extends Component {
         <Router basename="/tickets">
           <div className="App">
             <Header />
-            <Container className="py-3">
-              <Route exact path="/" component={Home} />
-              <Route path="/register" component={Register} />
-              <Route path="/refund" component={Refund} />
-            </Container>
+            <Route exact path="/" component={Home} />
+            <Route path="/register" component={Register} />
+            <Route path="/refund" component={Refund} />
           </div>
         </Router>
       </IntlProvider>

@@ -44,7 +44,7 @@ class Header extends Component {
   render () {
     const intl = this.props.intl
     return (
-      <Navbar color="primary" dark expand="md">
+      <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={Link} to="/">
           <img className="align-middle d-inline-block" src={Logo} width="40" height="40" alt="Taipei Ethereum Meetup Logo" />
           <span className="align-middle">Tickets</span>

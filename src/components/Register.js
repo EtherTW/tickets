@@ -3,6 +3,8 @@ import firebase from 'firebase';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { injectIntl } from 'react-intl'
+import { Container } from 'reactstrap';
+import SectionHeader from './SectionHeader';
 
 import AlertHelper from './AlertHelper';
 import {
@@ -100,34 +102,38 @@ class Register extends Component {
     const intl = this.props.intl
     return (
       <div>
-        <h2>
-          {intl.formatMessage({ id: 'Register' })}
-        </h2>
-        <p>
-          {intl.formatMessage({ id: 'registerDescription' }, { deposit: DEPOSIT })}
-        </p>
-        <Form className="w-50">
-          <FormGroup>
-            <Label for="name">{intl.formatMessage({ id: 'Name / Nickname' })}</Label>
-            <Input type="text" name="name" id="name" value={this.state.name} onChange={this.onNameChange} />
-          </FormGroup>
-          <FormGroup>
-            <Label for="email">{intl.formatMessage({ id: 'Email' })}</Label>
-            <Input type="email" name="email" id="email" value={this.state.email} onChange={this.onEmailChange} />
-          </FormGroup>
-          <FormGroup>
-            <Label for="wallet">{intl.formatMessage({ id: 'Wallet Address' })}</Label>
-            <Input plaintext name="wallet" id="wallet">{this.state.wallet}</Input>
-          </FormGroup>
-        </Form>
-        <Button disabled={this.state.hadTicket || !this.state.wallet} color="primary" onClick={this.onSend}>
-          {intl.formatMessage({ id: 'Register With MetaMask' })}
-        </Button>
-        <div className="my-3">
-          {this.renderError()}
-          {this.renderWarning()}
-          {this.renderTransaction()}
-        </div>
+        <SectionHeader>
+          <h2>
+            {intl.formatMessage({ id: 'Register' })}
+          </h2>
+          <p>
+            {intl.formatMessage({ id: 'registerDescription' }, { deposit: DEPOSIT })}
+          </p>
+        </SectionHeader>
+        <Container className='py-3'>
+          <Form className="w-50">
+            <FormGroup>
+              <Label for="name">{intl.formatMessage({ id: 'Name / Nickname' })}</Label>
+              <Input type="text" name="name" id="name" value={this.state.name} onChange={this.onNameChange} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="email">{intl.formatMessage({ id: 'Email' })}</Label>
+              <Input type="email" name="email" id="email" value={this.state.email} onChange={this.onEmailChange} />
+            </FormGroup>
+            <FormGroup>
+              <Label for="wallet">{intl.formatMessage({ id: 'Wallet Address' })}</Label>
+              <Input plaintext name="wallet" id="wallet">{this.state.wallet}</Input>
+            </FormGroup>
+          </Form>
+          <Button disabled={this.state.hadTicket || !this.state.wallet} color="primary" onClick={this.onSend}>
+            {intl.formatMessage({ id: 'Register With MetaMask' })}
+          </Button>
+          <div className="my-3">
+            {this.renderError()}
+            {this.renderWarning()}
+            {this.renderTransaction()}
+          </div>
+        </Container>
       </div>
     );
   }

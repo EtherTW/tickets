@@ -10,7 +10,6 @@ import {
 class AlertHelper extends Component {
   render () {
     const intl = this.props.intl
-    console.log(intl)
     const url = `${ETHERSCAN_URL}/tx/${this.props.transaction}`;
     switch (this.props.state) {
       case 'transaction-sent':

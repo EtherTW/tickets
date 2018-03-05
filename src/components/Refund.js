@@ -2,7 +2,8 @@ import Eth from 'ethjs';
 import React, { Component } from 'react';
 import { Form, Button, Input } from 'reactstrap';
 import { injectIntl } from 'react-intl'
-
+import { Container } from 'reactstrap';
+import SectionHeader from './SectionHeader';
 import AlertHelper from './AlertHelper';
 import {
   CONTRACT_ADDRESS,
@@ -102,28 +103,32 @@ class Refund extends Component {
     const intl = this.props.intl
     return (
       <div>
-        <h2>{intl.formatMessage({ id: 'Refund' })}</h2>
-        <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
-        <p>
-          {intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}
-        </p>
-        <p>
-          {intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong>
-        </p>
-        <div>
-          <Form className="w-50">
-            <Input value={this.state.secret} onChange={this.onInputChange} />
-            <Button disabled={!this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
-              {intl.formatMessage({ id: 'Refund' })}
-            </Button>
-          </Form>
+        <SectionHeader>
+          <h2>{intl.formatMessage({ id: 'Refund' })}</h2>
+          <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
+        </SectionHeader>
+        <Container className='py-3'>
+          <p>
+            {intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}
+          </p>
+          <p>
+            {intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong>
+          </p>
+          <div>
+            <Form className="w-50">
+              <Input value={this.state.secret} onChange={this.onInputChange} />
+              <Button disabled={!this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
+                {intl.formatMessage({ id: 'Refund' })}
+              </Button>
+            </Form>
 
-          <div className="my-3">
-            {this.renderTransaction()}
-            {this.renderWarning()}
-            {this.renderError()}
+            <div className="my-3">
+              {this.renderTransaction()}
+              {this.renderWarning()}
+              {this.renderError()}
+            </div>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }
