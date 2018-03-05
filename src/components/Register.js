@@ -127,11 +127,6 @@ class Register extends Component {
           {this.renderError()}
           {this.renderWarning()}
           {this.renderTransaction()}
-          haha
-          <AlertHelper transaction={this.state.transaction} state="transaction-sent" />
-          <AlertHelper state="no-web3" />
-          <AlertHelper state="no-wallet" />
-          <AlertHelper state="had-ticket" />
         </div>
       </div>
     );
