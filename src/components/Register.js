@@ -18,7 +18,6 @@ import {
 class Register extends Component {
   constructor (props) {
     super(props);
-
     this.state = {
       wallet: '',
       transaction: '',
@@ -30,26 +29,31 @@ class Register extends Component {
     };
   }
 
-  async componentDidMount () {
+  componentDidMount () {
     const newState = {};
-    // Initial with web3
-    if (typeof window.web3 !== 'undefined') {
-      let eth = new Eth(window.web3.currentProvider);
-      const accounts = await eth.accounts();
-      if (accounts.length > 0) {
-        const wallet = accounts[0];
-        const Ticket = eth.contract(CONTRACT_ABI);
-        const ticket = Ticket.at(CONTRACT_ADDRESS);
-        const result = await ticket.userId(wallet);
-        const hadTicket = result[0] > 0;
-        newState.wallet = wallet;
-        newState.hadTicket = hadTicket;
+    this.checkWeb3IntervalId = setInterval(async () => {
+      if (typeof window.web3 !== 'undefined') {
+        let eth = new Eth(window.web3.currentProvider);
+        const accounts = await eth.accounts();
+        if (accounts[0] !== this.state.wallet) {
+          const wallet = accounts[0];
+          const Ticket = eth.contract(CONTRACT_ABI);
+          const ticket = Ticket.at(CONTRACT_ADDRESS);
+          const result = await ticket.userId(wallet);
+          const hadTicket = result[0] > 0;
+          newState.wallet = wallet;
+          newState.hadTicket = hadTicket;
+          this.setState(newState)
+        }
+      } else {
+        newState.web3 = false;
+        this.setState(newState)
       }
-    } else {
-      newState.web3 = false;
-    }
+    }, 1000);
+  }
 
-    this.setState(newState)
+  componentWillUnmount() {
+    clearInterval(this.checkWeb3IntervalId);
   }
 
   onSend = async () => {
@@ -59,21 +63,25 @@ class Register extends Component {
       // Add error message
       return
     }
-    let eth = new Eth(window.web3.currentProvider);
-    const transaction = await eth.sendTransaction({
-      from: this.state.wallet,
-      to: CONTRACT_ADDRESS,
-      value: Eth.toWei(DEPOSIT, 'ether'),
-      gas: GAS_LIMIT,
-      gasPrice: GAS_PRICE,
-      data: '0x'
-    });
-    await firebase.database().ref(`users/${this.state.wallet}`).set({
-      name,
-      email,
-      transaction
-    });
-    this.setState({transaction});
+    try {
+      const eth = new Eth(window.web3.currentProvider);
+      const transaction = await eth.sendTransaction({
+        from: this.state.wallet,
+        to: CONTRACT_ADDRESS,
+        value: Eth.toWei(DEPOSIT, 'ether'),
+        gas: GAS_LIMIT,
+        gasPrice: GAS_PRICE,
+        data: '0x'
+      });
+      await firebase.database().ref(`users/${this.state.wallet}`).set({
+        name,
+        email,
+        transaction
+      });
+      this.setState({transaction});
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   onNameChange = (event) => {
@@ -93,7 +101,7 @@ class Register extends Component {
   renderError () {
     if (!this.state.web3) {
       return (<AlertHelper state="no-web3" />);
-    } else if (this.state.initialized && !this.state.wallet) {
+    } else if (!this.state.wallet) {
       return (<AlertHelper state="no-wallet" />);
     }
   }
@@ -126,10 +134,14 @@ class Register extends Component {
               <Label for="email">{intl.formatMessage({ id: 'Email' })}</Label>
               <Input type="email" name="email" id="email" value={this.state.email} onChange={this.onEmailChange} />
             </FormGroup>
-            <FormGroup>
-              <Label for="wallet">{intl.formatMessage({ id: 'Wallet Address' })}</Label>
-              <Input plaintext name="wallet" id="wallet">{this.state.wallet}</Input>
-            </FormGroup>
+            {
+              this.state.wallet && (
+                <FormGroup>
+                  <Label for="wallet">{intl.formatMessage({ id: 'Wallet Address' })}</Label>
+                  <Input plaintext name="wallet" id="wallet">{this.state.wallet}</Input>
+                </FormGroup>
+              )
+            }
           </Form>
           <Button disabled={this.state.hadTicket || !this.state.wallet} color="primary" onClick={this.onSend}>
             {intl.formatMessage({ id: 'Register With MetaMask' })}

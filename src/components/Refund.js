@@ -13,7 +13,7 @@ import {
 } from '../constants';
 
 class Refund extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -26,7 +26,7 @@ class Refund extends Component {
     };
   }
 
-  async componentDidMount () {
+  async componentDidMount() {
     const newState = {};
     // Initial with metamask
     if (typeof window.web3 !== 'undefined') {
@@ -72,13 +72,13 @@ class Refund extends Component {
     this.setState({ transaction });
   }
 
-  renderTransaction () {
+  renderTransaction() {
     if (this.state.transaction) {
       return <AlertHelper state="transaction-sent" transaction={this.state.transaction} />
     }
   }
 
-  renderWarning () {
+  renderWarning() {
     if (!this.state.hadTicket && this.state.wallet) {
       return <AlertHelper state="no-refund" />;
     }
@@ -88,7 +88,7 @@ class Refund extends Component {
     }
   }
 
-  renderError () {
+  renderError() {
     if (!this.state.web3) {
       return (<AlertHelper state="no-web3" />);
     } else if (!this.state.wallet) {
@@ -96,7 +96,7 @@ class Refund extends Component {
     }
   }
 
-  renderAttended () {
+  renderAttended() {
     if (!this.state.initialized) {
       return '';
     }
@@ -104,7 +104,7 @@ class Refund extends Component {
     return intl.formatMessage({ id: this.state.attended ? 'Attened' : 'Not Yet Attended' });
   }
 
-  render () {
+  render() {
     const intl = this.props.intl
     return (
       <div>
@@ -113,9 +113,13 @@ class Refund extends Component {
           <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
         </SectionHeader>
         <Container className='py-3'>
-          <p>
-            {intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}
-          </p>
+          {
+            this.state.transaction && (
+              <p>
+                {intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}
+              </p>
+            )
+          }
           <p>
             {intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong>
           </p>
