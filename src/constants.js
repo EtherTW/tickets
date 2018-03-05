@@ -8,5 +8,5 @@ export const DEPOSIT = 0.001;
 export const PRODUCTION = false;
 
 export const ETHERSCAN_URL = PRODUCTION ?
-  'https://etherscan.io/tx' :
-  'https://ropsten.etherscan.io/tx';
+  'https://etherscan.io' :
+  'https://ropsten.etherscan.io';

@@ -1,5 +1,5 @@
 import Eth from 'ethjs';
-import Firebase from 'firebase';
+import firebase from 'firebase';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
@@ -11,15 +11,6 @@ import {
   GAS_LIMIT,
   DEPOSIT
 } from '../constants';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCIP2W4I3aA9AOuvXpUpQLzFBmwvo3lQy8",
-  authDomain: "taipei-ethereum-meetup-ticket.firebaseapp.com",
-  databaseURL: "https://taipei-ethereum-meetup-ticket.firebaseio.com",
-  projectId: "taipei-ethereum-meetup-ticket",
-  storageBucket: "taipei-ethereum-meetup-ticket.appspot.com",
-  messagingSenderId: "515416889778"
-};
 
 class Register extends Component {
   constructor (props) {
@@ -36,13 +27,6 @@ class Register extends Component {
   }
 
   async componentDidMount () {
-    // Initial firebase
-    if (Firebase.apps.length === 0) {
-      this.firebase = Firebase.initializeApp(firebaseConfig);
-    } else {
-      this.firebase = Firebase.apps[0];
-    }
-
     // Initial with web3
     if (typeof window.web3 !== 'undefined') {
       let eth = new Eth(window.web3.currentProvider);
@@ -69,7 +53,7 @@ class Register extends Component {
       gasPrice: GAS_PRICE,
       data: '0x'
     });
-    await this.firebase.database().ref(`users/${this.state.wallet}`).set({
+    await firebase.database().ref(`users/${this.state.wallet}`).set({
       name: this.state.name,
       email: this.state.email,
       transaction

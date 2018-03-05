@@ -8,13 +8,13 @@ import {
 
 class AlertHelper extends Component {
   render () {
-    const url = `${ETHERSCAN_URL}/${this.props.transaction}`;
+    const url = `${ETHERSCAN_URL}/tx/${this.props.transaction}`;
 
     switch (this.props.state) {
       case 'transaction-sent':
         return (
           <Alert color="success">
-            你的交易已經發送，請到 <a href={url} target="_blank">Etherscan</a> 查詢交易是否成功。
+            你的交易已經發送，請到 <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a> 查詢交易是否成功。
           </Alert>
         );
 
