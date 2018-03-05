@@ -29,16 +29,17 @@ class Admin extends Component {
 
   componentDidMount () {
     firebase.auth()
-      .onAuthStateChanged(async(user) => {
+      .onAuthStateChanged((user) => {
         const signedIn = !!user;
-        const newState = { signedIn };
+        this.setState({signedIn});
 
         if (signedIn) {
-          const snapshot = await firebase.database().ref('users').once('value');
-          newState.users = snapshot.val();
+          (async() => {
+            const snapshot = await firebase.database().ref('users').once('value');
+            const users = snapshot.val();
+            this.setState({users});
+          })();
         }
-
-        this.setState(newState);
       });
   }
 
