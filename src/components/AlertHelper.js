@@ -10,13 +10,12 @@ import {
 class AlertHelper extends Component {
   render () {
     const intl = this.props.intl
-    console.log(intl)
-    const url = `${ETHERSCAN_URL}/${this.props.transaction}`;
+    const url = `${ETHERSCAN_URL}/tx/${this.props.transaction}`;
     switch (this.props.state) {
       case 'transaction-sent':
         return (
           <Alert color="success">
-            你的交易已經發送，請到 <a href={url} target="_blank">Etherscan</a> 查詢交易是否成功。
+            你的交易已經發送，請到 <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a> 查詢交易是否成功。
           </Alert>
         );
 
@@ -48,6 +47,12 @@ class AlertHelper extends Component {
             本錢包位址沒有押金，請確認你是否已經領回押金或所使用的錢包是否與當初報名時相同。
           </Alert>
         );
+      case 'no-attend':
+        return (
+          <Alert color="warning">
+            區塊鏈上尚未紀錄您的活動出席狀況前無法退還押金，請等候活動結束後主辦單位更新資訊至智能合約。
+          </Alert>
+        )
 
       default:
         return null;

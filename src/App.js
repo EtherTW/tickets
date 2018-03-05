@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Register from './components/Register';
 import Refund from './components/Refund';
+import Admin from './components/Admin';
 
 addLocaleData(zhHANT.data)
 addLocaleData(enUS.data)

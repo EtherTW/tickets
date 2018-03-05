@@ -16,15 +16,17 @@ class Refund extends Component {
     super(props);
 
     this.state = {
-      secret: '0x77696c6c',
       web3: true,
       wallet: '',
       transaction: '',
-      hadTicket: false
+      hadTicket: false,
+      initialized: false,
+      attended: false
     };
   }
 
   async componentDidMount () {
+    const newState = {};
     // Initial with metamask
     if (typeof window.web3 !== 'undefined') {
       let eth = new Eth(window.web3.currentProvider);
@@ -33,17 +35,21 @@ class Refund extends Component {
         const wallet = accounts[0];
         const Ticket = eth.contract(CONTRACT_ABI);
         const ticket = Ticket.at(CONTRACT_ADDRESS);
-        const result = await ticket.ticket(wallet);
-        this.setState({ wallet, hadTicket: result[0] });
+        const result = await ticket.userId(wallet);
+        const userId = result[0];
+        const hadTicket = userId > 0;
+        const attended = await ticket.isAttend(userId);
         this.ticketContract = ticket;
+        newState.wallet = wallet;
+        newState.hadTicket = hadTicket;
+        newState.attended = attended[0];
       }
     } else {
-      this.setState({ web3: false });
+      newState.web3 = true;
     }
-  }
 
-  onInputChange = (evt) => {
-    this.setState({secret: evt.target.value});
+    newState.initialized = true;
+    this.setState(newState);
   }
 
   onRefund = async () => {
@@ -54,7 +60,7 @@ class Refund extends Component {
       value: 0,
       gas: GAS_LIMIT,
       gasPrice: GAS_PRICE,
-      data: this.state.secret
+      data: '0x'
     });
 
     this.setState({ transaction });
@@ -70,6 +76,10 @@ class Refund extends Component {
     if (!this.state.hadTicket && this.state.wallet) {
       return <AlertHelper state="no-refund" />;
     }
+
+    if (!this.state.attended && this.state.initialized) {
+      return (<AlertHelper state="no-attend" />)
+    }
   }
 
   renderError () {
@@ -80,6 +90,14 @@ class Refund extends Component {
     }
   }
 
+  renderAttended () {
+    if (!this.state.initialized) {
+      return '';
+    }
+
+    return this.state.attended ? '確認出席活動' : '尚未出席活動';
+  }
+
   render () {
     const intl = this.props.intl
     return (
@@ -88,6 +106,9 @@ class Refund extends Component {
         <p>{intl.formatMessage({ id: 'refundDescription' })}</p>
         <p>
           {intl.formatMessage({ id: 'Transaction' })} {this.state.transaction}
+        </p>
+        <p>
+          活動參加狀況：<strong>{this.renderAttended()}</strong>
         </p>
         <div>
           <Form className="w-50">

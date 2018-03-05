@@ -1,5 +1,5 @@
 import Eth from 'ethjs';
-import Firebase from 'firebase';
+import firebase from 'firebase';
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { injectIntl } from 'react-intl'
@@ -13,15 +13,6 @@ import {
   DEPOSIT
 } from '../constants';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCIP2W4I3aA9AOuvXpUpQLzFBmwvo3lQy8",
-  authDomain: "taipei-ethereum-meetup-ticket.firebaseapp.com",
-  databaseURL: "https://taipei-ethereum-meetup-ticket.firebaseio.com",
-  projectId: "taipei-ethereum-meetup-ticket",
-  storageBucket: "taipei-ethereum-meetup-ticket.appspot.com",
-  messagingSenderId: "515416889778"
-};
-
 class Register extends Component {
   constructor (props) {
     super(props);
@@ -32,18 +23,13 @@ class Register extends Component {
       hadTicket: false,
       web3: true,
       name: '',
-      email: ''
+      email: '',
+      initialized: false
     };
   }
 
   async componentDidMount () {
-    // Initial firebase
-    if (Firebase.apps.length === 0) {
-      this.firebase = Firebase.initializeApp(firebaseConfig);
-    } else {
-      this.firebase = Firebase.apps[0];
-    }
-
+    const newState = {};
     // Initial with web3
     if (typeof window.web3 !== 'undefined') {
       let eth = new Eth(window.web3.currentProvider);
@@ -52,12 +38,16 @@ class Register extends Component {
         const wallet = accounts[0];
         const Ticket = eth.contract(CONTRACT_ABI);
         const ticket = Ticket.at(CONTRACT_ADDRESS);
-        const result = await ticket.ticket(wallet);
-        this.setState({ wallet, hadTicket: result[0] });
+        const result = await ticket.userId(wallet);
+        const hadTicket = result[0] > 0;
+        newState.wallet = wallet;
+        newState.hadTicket = hadTicket;
       }
     } else {
-      this.setState({web3: false});
+      newState.web3 = false;
     }
+
+    this.setState(newState)
   }
 
   onSend = async () => {
@@ -70,7 +60,7 @@ class Register extends Component {
       gasPrice: GAS_PRICE,
       data: '0x'
     });
-    await this.firebase.database().ref(`users/${this.state.wallet}`).set({
+    await firebase.database().ref(`users/${this.state.wallet}`).set({
       name: this.state.name,
       email: this.state.email,
       transaction
@@ -95,7 +85,7 @@ class Register extends Component {
   renderError () {
     if (!this.state.web3) {
       return (<AlertHelper state="no-web3" />);
-    } else if (!this.state.wallet) {
+    } else if (this.state.initialized && !this.state.wallet) {
       return (<AlertHelper state="no-wallet" />);
     }
   }
