@@ -53,6 +53,12 @@ class Register extends Component {
   }
 
   onSend = async () => {
+    const name = this.state.name
+    const email = this.state.email
+    if (!name || !email) {
+      // Add error message
+      return
+    }
     let eth = new Eth(window.web3.currentProvider);
     const transaction = await eth.sendTransaction({
       from: this.state.wallet,
@@ -63,8 +69,8 @@ class Register extends Component {
       data: '0x'
     });
     await firebase.database().ref(`users/${this.state.wallet}`).set({
-      name: this.state.name,
-      email: this.state.email,
+      name,
+      email,
       transaction
     });
     this.setState({transaction});
