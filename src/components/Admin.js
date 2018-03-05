@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
-import { Table, Button } from 'reactstrap';
+import { Table, Button, ButtonGroup  } from 'reactstrap';
 
 import {
   ETHERSCAN_URL
@@ -34,13 +34,31 @@ class Admin extends Component {
         this.setState({signedIn});
 
         if (signedIn) {
-          (async() => {
-            const snapshot = await firebase.database().ref('users').once('value');
-            const users = snapshot.val();
-            this.setState({users});
-          })();
+          firebase.database().ref('users').on('value', (snapshot) => {
+            const users = snapshot.val() || {};
+            this.setState({ users });
+          });
         }
       });
+  }
+
+  onAttendClick = (wallet, attended) => {
+    const user = this.state.users[wallet];
+    const updated = {};
+    user.attended = attended;
+    updated[`/users/${wallet}`] = user;
+    firebase.database().ref().update(updated);
+  }
+
+  makeTestData = async () => {
+    for (let i = 0; i < 200; i++) {
+      await firebase.database().ref('users/' + i).set({
+        name: `User ${i}`,
+        email: `user-${i}@gmail.com`,
+        transaction: '0x349573294573245',
+        attended: false
+      });
+    }
   }
 
   renderUsersTable () {
@@ -56,12 +74,20 @@ class Admin extends Component {
     const rows = users.map(user => {
       const walletUrl = `${ETHERSCAN_URL}/address/${user.wallet}`;
       const transactionUrl = `${ETHERSCAN_URL}/tx/${user.transaction}`;
+      const attended = user.attended ? '✓' : '';
       return (
         <tr key={user.wallet}>
-          <td><a href={walletUrl} target="_blank" rel="noopener noreferrer">{user.wallet.substr(0, 6)}...</a></td>
+          <td className="text-center">{attended}</td>
+          <td><a href={walletUrl} target="_blank" rel="noopener noreferrer">{user.wallet.substr(0, 10)}...</a></td>
           <td>{user.name}</td>
           <td>{user.email}</td>
-          <td><a href={transactionUrl} target="_blank" rel="noopener noreferrer">{user.transaction.substr(0, 6)}...</a></td>
+          <td><a href={transactionUrl} target="_blank" rel="noopener noreferrer">{user.transaction.substr(0, 10)}...</a></td>
+          <td>
+            <ButtonGroup>
+              <Button color="primary" onClick={() => this.onAttendClick(user.wallet, true)}>出席</Button>
+              <Button color="warning" onClick={() => this.onAttendClick(user.wallet, false)}>未出席</Button>
+            </ButtonGroup>
+          </td>
         </tr>
       );
     });
@@ -70,10 +96,12 @@ class Admin extends Component {
       <Table>
         <thead>
           <tr>
+            <th>出席狀況</th>
             <th>錢包地址</th>
             <th>名字</th>
             <th>電子郵件</th>
             <th>交易</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody>
@@ -97,6 +125,7 @@ class Admin extends Component {
           {this.renderUsersTable()}
           <div className="my-3 text-center">
             <Button color="primary" onClick={() => firebase.auth().signOut()}>登出</Button>
+            {/* <Button onClick={this.makeTestData}>產生測試資料 (Don't click on production)</Button> */}
           </div>
         </div>
       );

@@ -92,7 +92,7 @@ class Refund extends Component {
         <div>
           <Form className="w-50">
             <Input value={this.state.secret} onChange={this.onInputChange} />
-            <Button disabled={!this.state.hadTicket || this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
+            <Button disabled={!this.state.hadTicket || !!this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
               取回押金
             </Button>
           </Form>
