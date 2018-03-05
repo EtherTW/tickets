@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import { injectIntl } from 'react-intl'
 import {
   Collapse,
   Navbar,
@@ -7,7 +8,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 
 import Logo from './assets/logo.png';
@@ -15,10 +20,21 @@ import Logo from './assets/logo.png';
 class Header extends Component {
   constructor (props) {
     super(props);
-
     this.state = {
       isOpen: false
     };
+  }
+
+  handleEnglishItemOnClick = (e) => {
+    e.preventDefault()
+    localStorage.setItem('lang', 'en')
+    window.location.reload()
+  }
+
+  handleChineseItemOnClick = (e) => {
+    e.preventDefault()
+    localStorage.setItem('lang', 'zh')
+    window.location.reload()
   }
 
   toggle = () => {
@@ -26,8 +42,9 @@ class Header extends Component {
   }
 
   render () {
+    const intl = this.props.intl
     return (
-      <Navbar color="primary" dark expand="md">
+      <Navbar color="dark" dark expand="md">
         <NavbarBrand tag={Link} to="/">
           <img className="align-middle d-inline-block" src={Logo} width="40" height="40" alt="Taipei Ethereum Meetup Logo" />
           <span className="align-middle">Tickets</span>
@@ -36,13 +53,28 @@ class Header extends Component {
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink tag={Link} to="/register/">報名</NavLink>
+              <NavLink tag={Link} to="/register/">
+                {intl.formatMessage({ id: 'Register' })}
+              </NavLink>
             </NavItem>
             <NavItem>
               <NavLink tag={Link} to="/refund">
-                取回押金
+                {intl.formatMessage({ id: 'Refund' })}
               </NavLink>
             </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                {intl.formatMessage({ id: 'Language' })}
+              </DropdownToggle>
+              <DropdownMenu >
+                <DropdownItem onClick={this.handleEnglishItemOnClick}>
+                  English
+                </DropdownItem>
+                <DropdownItem onClick={this.handleChineseItemOnClick}>
+                  繁體中文
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
         </Collapse>
       </Navbar>
@@ -50,4 +82,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default injectIntl(Header);

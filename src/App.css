@@ -1,4 +1,12 @@
 table.table {
   max-width: 1000px;
-  margin: auto;
+  width: 100%;
+}
+
+.section-header h2 {
+  color: #ffffff;
+}
+
+.section-header p {
+  color: #ffffff;
 }
