@@ -1,6 +1,6 @@
 import Eth from 'ethjs';
 import React, { Component } from 'react';
-import { Form, Button, Input } from 'reactstrap';
+import { Form, Button } from 'reactstrap';
 
 import AlertHelper from './AlertHelper';
 import {
@@ -15,15 +15,17 @@ class Refund extends Component {
     super(props);
 
     this.state = {
-      secret: '0x77696c6c',
       web3: true,
       wallet: '',
       transaction: '',
-      hadTicket: false
+      hadTicket: false,
+      initialized: false,
+      attended: false
     };
   }
 
   async componentDidMount () {
+    const newState = {};
     // Initial with metamask
     if (typeof window.web3 !== 'undefined') {
       let eth = new Eth(window.web3.currentProvider);
@@ -32,17 +34,21 @@ class Refund extends Component {
         const wallet = accounts[0];
         const Ticket = eth.contract(CONTRACT_ABI);
         const ticket = Ticket.at(CONTRACT_ADDRESS);
-        const result = await ticket.ticket(wallet);
-        this.setState({ wallet, hadTicket: result[0] });
+        const result = await ticket.userId(wallet);
+        const userId = result[0];
+        const hadTicket = userId > 0;
+        const attended = await ticket.isAttend(userId);
         this.ticketContract = ticket;
+        newState.wallet = wallet;
+        newState.hadTicket = hadTicket;
+        newState.attended = attended[0];
       }
     } else {
-      this.setState({ web3: false });
+      newState.web3 = true;
     }
-  }
 
-  onInputChange = (evt) => {
-    this.setState({secret: evt.target.value});
+    newState.initialized = true;
+    this.setState(newState);
   }
 
   onRefund = async () => {
@@ -53,7 +59,7 @@ class Refund extends Component {
       value: 0,
       gas: GAS_LIMIT,
       gasPrice: GAS_PRICE,
-      data: this.state.secret
+      data: '0x'
     });
 
     this.setState({ transaction });
@@ -74,9 +80,17 @@ class Refund extends Component {
   renderError () {
     if (!this.state.web3) {
       return (<AlertHelper state="no-web3" />);
-    } else if (!this.state.wallet) {
+    } else if (this.state.wallet && !this.state.wallet) {
       return (<AlertHelper state="no-wallet" />);
     }
+  }
+
+  renderAttended () {
+    if (!this.state.initialized) {
+      return '';
+    }
+
+    return this.state.attended ? '確認出席活動' : '尚未出席活動';
   }
 
   render () {
@@ -84,14 +98,13 @@ class Refund extends Component {
       <div>
         <h2>取回押金</h2>
         <p>
-          活動結束後你可以透過在活動報到時所取得的驗證碼取回押金，請在下面輸入驗證碼。
+          活動結束後主辦單位將會核對並且記錄出席紀錄至智能合約當中，我們預計活動結束後的一天後更新紀錄，請耐心等候。
         </p>
         <p>
-          Transaction: {this.state.transaction}
+          活動參加狀況：<strong>{this.renderAttended()}</strong>
         </p>
         <div>
           <Form className="w-50">
-            <Input value={this.state.secret} onChange={this.onInputChange} />
             <Button disabled={!this.state.hadTicket || !!this.state.transaction || !this.state.wallet} className="mt-3" color="primary" onClick={this.onRefund}>
               取回押金
             </Button>

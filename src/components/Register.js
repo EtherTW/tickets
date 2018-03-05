@@ -22,11 +22,13 @@ class Register extends Component {
       hadTicket: false,
       web3: true,
       name: '',
-      email: ''
+      email: '',
+      initialized: false
     };
   }
 
   async componentDidMount () {
+    const newState = {};
     // Initial with web3
     if (typeof window.web3 !== 'undefined') {
       let eth = new Eth(window.web3.currentProvider);
@@ -35,12 +37,16 @@ class Register extends Component {
         const wallet = accounts[0];
         const Ticket = eth.contract(CONTRACT_ABI);
         const ticket = Ticket.at(CONTRACT_ADDRESS);
-        const result = await ticket.ticket(wallet);
-        this.setState({ wallet, hadTicket: result[0] });
+        const result = await ticket.userId(wallet);
+        const hadTicket = result[0] > 0;
+        newState.wallet = wallet;
+        newState.hadTicket = hadTicket;
       }
     } else {
-      this.setState({web3: false});
+      newState.web3 = false;
     }
+
+    this.setState(newState)
   }
 
   onSend = async () => {
@@ -78,7 +84,7 @@ class Register extends Component {
   renderError () {
     if (!this.state.web3) {
       return (<AlertHelper state="no-web3" />);
-    } else if (!this.state.wallet) {
+    } else if (this.state.initialized && !this.state.wallet) {
       return (<AlertHelper state="no-wallet" />);
     }
   }
