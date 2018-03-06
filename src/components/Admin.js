@@ -121,7 +121,7 @@ class Admin extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="container">
           {this.renderUsersTable()}
           <div className="my-3 text-center">
             <Button color="primary" onClick={() => firebase.auth().signOut()}>登出</Button>
