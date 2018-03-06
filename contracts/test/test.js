@@ -7,7 +7,7 @@ contract('test', function(accounts) {
   const user2 = accounts[2]
   const user3 = accounts[3]
   const TEMWallet = accounts[4]
-  const DEPOSIT = Number(web3.toWei(0.001, "ether"))
+  const DEPOSIT = Number(web3.toWei(0.03, "ether"))
 
   const balanceOf = async function (address) {
     return await web3.eth.getBalance(address)

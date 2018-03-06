@@ -2,7 +2,8 @@ pragma solidity ^0.4.18;
 
 
 contract TEMTicket {
-    uint256 constant public DEPOSIT = 0.001 ether;
+    uint256 constant public DEPOSIT = 0.03 ether;
+    uint256 constant public MAX_ATTENDEE = 100;
 
     mapping (uint256 => address) public id2Addr;
     mapping (address => uint256) public userId;
@@ -27,11 +28,12 @@ contract TEMTicket {
   		}
     }
 
-    function getTicket (address _attendees) payable public {
-        require(msg.value >= DEPOSIT && userId[_attendees] == 0);
+    function getTicket (address _attendee) payable public {
+        require(msg.value >= DEPOSIT && userId[_attendee] == 0);
         userAmount ++;
-        require(userAmount < 256);
-        userId[_attendees] = userAmount;
+        require(userAmount <= MAX_ATTENDEE);
+        userId[_attendee] = userAmount;
+        id2Addr[userAmount] = _attendee;
         TEMWallet.transfer(msg.value - DEPOSIT);
     }
 
