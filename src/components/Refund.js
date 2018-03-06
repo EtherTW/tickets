@@ -74,11 +74,6 @@ class Refund extends Component {
   }
 
   onRefund = async () => {
-    const secret = this.state.secret
-    if (!secret) {
-      // Add error message
-      return
-    }
     let eth = new Eth(window.web3.currentProvider)
     const transaction = await eth.sendTransaction({
       from: this.state.wallet,
@@ -133,7 +128,6 @@ class Refund extends Component {
               {this.state.initialized && <p>{intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong></p>}
               <div>
                 <Form>
-                  <Input value={this.state.secret} onChange={this.onInputChange} />
                   <Button disabled={!this.state.attended || !this.state.hadTicket || this.state.transaction || !this.state.wallet} className='mt-3' color='primary' onClick={this.onRefund}>
                     {intl.formatMessage({ id: 'Refund' })}
                   </Button>
