@@ -17,6 +17,8 @@ import {
   INTERVAL_TIME,
 } from '../constants'
 
+const LIMIT = 256;
+
 class Register extends Component {
   constructor(props) {
     super(props)
@@ -28,7 +30,8 @@ class Register extends Component {
       name: null,
       email: null,
       initialized: false,
-      validNetwork: false
+      validNetwork: false,
+      registrationAmount: 0
     }
   }
 
@@ -49,8 +52,10 @@ class Register extends Component {
             const Ticket = eth.contract(CONTRACT_ABI)
             const ticket = Ticket.at(CONTRACT_ADDRESS)
             const result = await ticket.userId(wallet)
+            const userAmount = await ticket.userAmount()
             const hadTicket = result[0] > 0
             newState.hadTicket = hadTicket
+            newState.registrationAmount = userAmount[0].toNumber()
           } else {
             newState.hadTicket = false
           }
@@ -157,6 +162,10 @@ class Register extends Component {
                     </FormGroup>
                   )
                 }
+                <FormGroup>
+                    <Label for="registration-amount">{intl.formatMessage({ id: 'Registration Amount' })}</Label>
+                    <Input plaintext name="registration-amount">{this.state.registrationAmount} / {LIMIT}</Input>
+                </FormGroup>
               </Form>
               <Button disabled={this.state.hadTicket || !this.state.wallet || !this.state.wallet || !this.state.validNetwork} color='primary' onClick={this.onSend}>
                 {intl.formatMessage({ id: 'Register With MetaMask' })}

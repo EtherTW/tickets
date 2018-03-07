@@ -28,5 +28,6 @@
   "Alert Invalid Network": "請在 MetaMask 上連接到 mainnet。",
   "Alert Transaction Sent": "你的交易已經發送，請到 {link} 查詢交易是否成功。請注意只有交易成功時才代表報名完成，如果您的交易失敗請於 Etherscan 查看原因並且再次報名。",
   "Alert Without MetaMask": "您還沒有安裝 MetaMask，請先到 {link} 安裝並且儲值超過 {deposit} ETH 以支付押金與礦工費用。",
-  "Contact Us": "聯絡我們"
+  "Contact Us": "聯絡我們",
+  "Registration Amount": "報名人數"
 }
