@@ -27,8 +27,9 @@ function sendRegisterEmail (user) {
   };
 
   mailOptions.subject = SUBJECT;
-  mailOptions.text = `Hi ${user.name},\n\n Thank you to register this event, ` +
-    `please take a look on transaction url to make sure your transaction is successful and also please show this email to our staff when you attend.\n\n` +
+  mailOptions.text = `Hi ${user.name},\n\n` +
+    `Thank you to register this event, ` +
+    `please take a look on your transaction url, you get ticket only when transaction is successful. when you arrive venue please show this email to our staff.\n\n` +
     `* Name: ${user.name}\n` +
     `* Email: ${user.email}\n` +
     `* Wallet: ${user.wallet}\n` +

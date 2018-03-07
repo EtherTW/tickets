@@ -169,10 +169,14 @@ class Register extends Component {
                     </FormGroup>
                   )
                 }
-                <FormGroup>
-                    <Label for="registration-amount">{intl.formatMessage({ id: 'Registration Amount' })}</Label>
-                    <Input plaintext name="registration-amount">{this.state.registrationAmount} / {LIMIT}</Input>
-                </FormGroup>
+                {
+                  this.state.initialized && (
+                    <FormGroup>
+                      <Label for="registration-amount">{intl.formatMessage({ id: 'Registration Amount' })}</Label>
+                      <Input plaintext name="registration-amount">{this.state.registrationAmount} / {LIMIT}</Input>
+                    </FormGroup>
+                  )
+                }
               </Form>
               <Button disabled={this.registrationEnd() || this.state.hadTicket || !this.state.wallet || !this.state.wallet || !this.state.validNetwork} color='primary' onClick={this.onSend}>
                 {intl.formatMessage({ id: 'Register With MetaMask' })}
