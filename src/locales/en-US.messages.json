@@ -29,5 +29,6 @@
   "Alert Transaction Sent": "Your transaction has been sent. Please check the transaction status on {link}. Notice: you get ticket only when transaction is successful, if your transaction is failed please check the reason on Etherscan and register it again.",
   "Alert Without MetaMask": "You have not yet installed MetaMask. Please go to install {link} and have more than {deposit} ETH for the deposit and transaction fee.",
   "Contact Us": "Contract Us",
-  "Registration Amount": "Registration Amount"
+  "Registration Amount": "Registration Amount",
+  "Registration End": "Registration Ended"
 }

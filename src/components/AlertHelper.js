@@ -70,6 +70,13 @@ class AlertHelper extends Component {
             {intl.formatMessage({ id: 'Alert Invalid Network' })}
           </Alert>
         )
+
+      case 'registration-ended':
+        return (
+          <Alert color="info">
+            {intl.formatMessage({ id: 'Registration Ended'})}
+          </Alert>
+        )
       default:
         return null;
     }

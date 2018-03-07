@@ -75,6 +75,10 @@ class Register extends Component {
     this.checkWeb3IntervalId = null
   }
 
+  registrationEnd () {
+    return this.state.registrationAmount >= LIMIT;
+  }
+
   onSend = async () => {
     const {name, email, wallet} = this.state;
     if (!name || !email) {
@@ -113,6 +117,9 @@ class Register extends Component {
   }
 
   renderAlert = () => {
+    if (this.registrationEnd()) {
+      return (<AlertHelper state='registration-ended' />);
+    }
     if (!this.state.web3) {
       return (<AlertHelper state='no-web3' />)
     }
@@ -167,7 +174,7 @@ class Register extends Component {
                     <Input plaintext name="registration-amount">{this.state.registrationAmount} / {LIMIT}</Input>
                 </FormGroup>
               </Form>
-              <Button disabled={this.state.hadTicket || !this.state.wallet || !this.state.wallet || !this.state.validNetwork} color='primary' onClick={this.onSend}>
+              <Button disabled={this.registrationEnd() || this.state.hadTicket || !this.state.wallet || !this.state.wallet || !this.state.validNetwork} color='primary' onClick={this.onSend}>
                 {intl.formatMessage({ id: 'Register With MetaMask' })}
               </Button>
               <div className='my-3'>
