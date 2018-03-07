@@ -1,6 +1,6 @@
 import Eth from 'ethjs'
 import React, { Component } from 'react'
-import { Form, Button, Input } from 'reactstrap'
+import { Form, Button } from 'reactstrap'
 import { injectIntl } from 'react-intl'
 import { Container, Row, Col } from 'reactstrap'
 import SectionHeader from './SectionHeader'

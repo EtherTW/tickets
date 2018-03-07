@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/postman/functions/node_modules
 
 # testing
 /coverage

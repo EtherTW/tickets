@@ -25,5 +25,6 @@
   "Alert Had Ticket": "本錢包位址已經報名，當天請出示寄給您的電子郵件即可。",
   "Alert No Refund": "本錢包位址沒有押金，請確認你是否已經領回押金或所使用的錢包是否與當初報名時相同。",
   "Alert No Attend": "區塊鏈上尚未紀錄您的活動出席狀況前無法退還押金，請等候活動結束後主辦單位更新資訊至智能合約。",
-  "Alert Invalid Network": "請在 MetaMask 上連接到 mainnet。"
+  "Alert Invalid Network": "請在 MetaMask 上連接到 mainnet。",
+  "Contact Us": "聯絡我們"
 }

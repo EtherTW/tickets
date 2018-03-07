@@ -1,8 +1,7 @@
-'use strict';
-
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 
+const production = functions.config().general.production === 1;
 const gmailEmail = functions.config().gmail.email;
 const gmailPassword = functions.config().gmail.password;
 const mailTransport = nodemailer.createTransport({
@@ -14,6 +13,7 @@ const mailTransport = nodemailer.createTransport({
 });
 
 const SUBJECT = 'Taipei Ethereum Meetup - ticket information';
+const ETHERSCAN_BASE = production ? 'https://etherscan.io/tx' : 'https://ropsten.etherscan.io/tx';
 
 exports.sendRegisterEmail = functions.database.ref('/users/{wallet}').onCreate((event) => {
   const user = event.data.val();
@@ -24,16 +24,19 @@ exports.sendRegisterEmail = functions.database.ref('/users/{wallet}').onCreate((
 
 function sendRegisterEmail (user) {
   const mailOptions = {
-    from: `${APP_NAME} <eth.taipei@gmail.com>`,
+    from: `Taipei Ethereum Meetup <eth.taipei@gmail.com>`,
     to: user.email,
   };
 
-  // The user subscribed to the newsletter.
   mailOptions.subject = SUBJECT;
-  mailOptions.text = `Hi ${user.name}\n\n, Thank you for registration, ` +
-    `please show this email when you arrive venue to our staff.\n\n` +
-    `Wallet: ${user.wallet}\nName: ${user.name}\nEmail: ${user.email}\nTransaction: ${user.transaction}\n`;
+  mailOptions.text = `Hi ${user.name},\n\n Thank you to register this event, ` +
+    `please take a look on transaction url to make sure your transaction is successful and also please show this email to our staff when you attend.\n\n` +
+    `* Name: ${user.name}\n` +
+    `* Email: ${user.email}\n` +
+    `* Wallet: ${user.wallet}\n` +
+    `* Transaction URL: ${ETHERSCAN_BASE + '/' + user.transaction}\n\n` +
+    `- Taipei Ethereum Meetup`;
   return mailTransport.sendMail(mailOptions).then(() => {
-    return console.log('registration email sent to:', email);
+    return console.log('registration email sent to:', user.email);
   });
 }
