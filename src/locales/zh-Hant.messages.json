@@ -1,7 +1,7 @@
 {
   "Register": "報名",
   "Refund": "取回押金",
-  "Language": "語言",
+  "Language": "語言 (Language)",
   "eventTitle": "Ethereum 全明星技術座談",
   "eventDescription": "Taipei Ethereum Meetup 社群邀起到了 Ethereum 區塊鏈生態系中擔任不同角色的開發者與研究人員來台展開兩場座談會，其中內容包括了擴展性方案 Sharding client 以及當下的開發與研究進度座談。",
   "eventPayment": "本活動為免費活動，但將透過 Ethereum 智能合約收取 Ether 押金，當天出席活動後將會退還押金。",

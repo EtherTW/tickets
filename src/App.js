@@ -19,10 +19,10 @@ class App extends Component {
   getLocale =() => {
     const lang = localStorage.getItem('lang')
     switch (lang) {
-      case 'zh':
-        return zhHANT
-      default:
+      case 'en':
         return enUS
+      default:
+        return zhHANT
     }
   }
 
