@@ -15,10 +15,8 @@ const mailTransport = nodemailer.createTransport({
 const SUBJECT = 'Taipei Ethereum Meetup - ticket information';
 const ETHERSCAN_BASE = production ? 'https://etherscan.io/tx' : 'https://ropsten.etherscan.io/tx';
 
-exports.sendRegisterEmail = functions.database.ref('/users/{wallet}').onCreate((event) => {
+exports.sendRegisterEmail = functions.database.ref('/users/{uid}').onCreate((event) => {
   const user = event.data.val();
-  user.wallet = event.params.wallet;
-
   return sendRegisterEmail(user);
 });
 
