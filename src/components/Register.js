@@ -71,8 +71,7 @@ class Register extends Component {
   }
 
   onSend = async () => {
-    const name = this.state.name
-    const email = this.state.email
+    const {name, email, wallet} = this.state;
     if (!name || !email) {
       // Add error message
       return
@@ -87,10 +86,12 @@ class Register extends Component {
         gasPrice: GAS_PRICE,
         data: '0x'
       })
-      await firebase.database().ref(`users/${this.state.wallet}`).set({
+      const userRef = firebase.database().ref('users').push();
+      await userRef.set({
         name,
         email,
-        transaction
+        transaction,
+        wallet
       })
       this.setState({ transaction })
     } catch (error) {

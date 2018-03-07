@@ -42,22 +42,20 @@ class Admin extends Component {
       });
   }
 
-  onAttendClick = (wallet, attended) => {
-    const user = this.state.users[wallet];
+  onAttendClick = (uid, attended) => {
+    const user = this.state.users[uid];
     const updated = {};
     user.attended = attended;
-    updated[`/users/${wallet}`] = user;
+    updated[`/users/${uid}`] = user;
     firebase.database().ref().update(updated);
   }
 
   renderUsersTable () {
     const users = [];
-    Object.keys(this.state.users).forEach(walletAddress => {
-      const user = this.state.users[walletAddress];
-      users.push({
-        wallet: walletAddress,
-        ...user
-      });
+    Object.keys(this.state.users).forEach(uid => {
+      const user = this.state.users[uid];
+      user.uid = uid;
+      users.push(user);
     });
 
     const rows = users.map(user => {
@@ -73,8 +71,8 @@ class Admin extends Component {
           <td><a href={transactionUrl} target="_blank" rel="noopener noreferrer">{user.transaction.substr(0, 10)}...</a></td>
           <td>
             <ButtonGroup>
-              <Button color="primary" onClick={() => this.onAttendClick(user.wallet, true)}>出席</Button>
-              <Button color="warning" onClick={() => this.onAttendClick(user.wallet, false)}>未出席</Button>
+              <Button color="primary" onClick={() => this.onAttendClick(user.uid, true)}>出席</Button>
+              <Button color="warning" onClick={() => this.onAttendClick(user.uid, false)}>未出席</Button>
             </ButtonGroup>
           </td>
         </tr>
