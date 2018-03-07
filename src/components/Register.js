@@ -178,7 +178,7 @@ class Register extends Component {
                   )
                 }
               </Form>
-              <Button disabled={this.registrationEnd() || this.state.hadTicket || !this.state.wallet || !this.state.wallet || !this.state.validNetwork} color='primary' onClick={this.onSend}>
+              <Button disabled={this.registrationEnd() || this.state.hadTicket || !this.state.wallet || this.state.transaction || !this.state.validNetwork} color='primary' onClick={this.onSend}>
                 {intl.formatMessage({ id: 'Register With MetaMask' })}
               </Button>
               <div className='my-3'>
