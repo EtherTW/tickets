@@ -50,17 +50,6 @@ class Admin extends Component {
     firebase.database().ref().update(updated);
   }
 
-  makeTestData = async () => {
-    for (let i = 0; i < 200; i++) {
-      await firebase.database().ref('users/' + i).set({
-        name: `User ${i}`,
-        email: `user-${i}@gmail.com`,
-        transaction: '0x349573294573245',
-        attended: false
-      });
-    }
-  }
-
   renderUsersTable () {
     const users = [];
     Object.keys(this.state.users).forEach(walletAddress => {
@@ -125,7 +114,6 @@ class Admin extends Component {
           {this.renderUsersTable()}
           <div className="my-3 text-center">
             <Button color="primary" onClick={() => firebase.auth().signOut()}>登出</Button>
-            {/* <Button onClick={this.makeTestData}>產生測試資料 (Don't click on production)</Button> */}
           </div>
         </div>
       );
