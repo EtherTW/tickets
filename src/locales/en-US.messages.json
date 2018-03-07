@@ -26,5 +26,7 @@
   "Alert No Refund": "There is no deposit from this wallet address recorded. Please make sure you have not yet refunded and you use the same wallet address as the one in registration.",
   "Alert No Attend": "You can only be able to refund after the event with attendance. Please wait until the event has finished and our organiser will update the smart contract to enable refund.",
   "Alert Invalid Network": "Please connect to the mainnet on Metamask.",
+  "Alert Transaction Sent": "Your transaction has been sent. Please check the transaction status on {link}. Notice: you get ticket only when transaction is successful, if your transaction is failed please check the reason on Etherscan and register it again.",
+  "Alert Without MetaMask": "You have not yet installed MetaMask. Please go to install {link} and have more than {deposit} ETH for the deposit and transaction fee.",
   "Contact Us": "Contract Us"
 }

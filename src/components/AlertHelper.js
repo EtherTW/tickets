@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert } from 'reactstrap';
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
   ETHERSCAN_URL,
@@ -15,16 +15,25 @@ class AlertHelper extends Component {
       case 'transaction-sent':
         return (
           <Alert color="success">
-            {intl.locale === 'en-US' && (<div>Your transaction has been sent. Please check the transaction status on <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>.</div>)}
-            {intl.locale === 'zh-Hans-CN' && (<div>你的交易已經發送，請到 <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a> 查詢交易是否成功。</div>)}
+            <FormattedMessage
+              id='Alert Transaction Sent'
+              values={{
+                link: <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>
+              }}
+            />
           </Alert>
         );
 
       case 'no-web3':
         return (
           <Alert color="danger">
-            {intl.locale === 'en-US' && (<div>You have not yet installed MetaMask. Please go to install <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">MetaMask</a> and have at least {DEPOSIT + 0.001} ETH for the deposit and transaction fee.</div>)}
-            {intl.locale === 'zh-Hans-CN' && (<div>您還沒有安裝 MetaMask，請先到 <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">官方網站</a> 安裝並且儲值至少約 {DEPOSIT + 0.001} ETH （押金與給礦工的交易費）。</div>)}
+            <FormattedMessage
+              id='Alert Without MetaMask'
+              values={{
+                link: <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">MetaMask</a>,
+                deposit: DEPOSIT
+              }}
+            />
           </Alert>
         );
 
