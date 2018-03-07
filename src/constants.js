@@ -5,10 +5,13 @@ export const CONTRACT_ABI = JSON.parse('[{ "constant": false, "inputs": [{ "name
 export const GAS_PRICE = Eth.toWei(21, 'Gwei');
 export const GAS_LIMIT = 70000;
 export const DEPOSIT = 0.001;
-export const PRODUCTION = false;
-export const NETWORK_ID = '3'; // 1 = mainnet, 3 = ropsten
 export const INTERVAL_TIME = 1000;
 
+// When you change it please make sure you also set production on firebase by
+// firebase functions:config:set general.production="1"
+export const PRODUCTION = false;
+
+export const NETWORK_ID = PRODUCTION ? '1' : '3'; // 1 = mainnet, 3 = ropsten
 export const ETHERSCAN_URL = PRODUCTION ?
   'https://etherscan.io' :
   'https://ropsten.etherscan.io';

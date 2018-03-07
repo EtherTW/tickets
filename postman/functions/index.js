@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const nodemailer = require('nodemailer');
 
-const production = functions.config().general.production === 1;
+const production = functions.config().general.production === '1';
 const gmailEmail = functions.config().gmail.email;
 const gmailPassword = functions.config().gmail.password;
 const mailTransport = nodemailer.createTransport({
