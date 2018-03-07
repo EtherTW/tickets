@@ -17,8 +17,6 @@ import {
   INTERVAL_TIME,
 } from '../constants'
 
-const LIMIT = 256;
-
 class Register extends Component {
   constructor(props) {
     super(props)
@@ -31,7 +29,8 @@ class Register extends Component {
       email: null,
       initialized: false,
       validNetwork: false,
-      registrationAmount: 0
+      registrationAmount: 0,
+      maxAttendee: 0
     }
   }
 
@@ -51,11 +50,13 @@ class Register extends Component {
           if (wallet) {
             const Ticket = eth.contract(CONTRACT_ABI)
             const ticket = Ticket.at(CONTRACT_ADDRESS)
-            const result = await ticket.userId(wallet)
-            const userAmount = await ticket.userAmount()
-            const hadTicket = result[0] > 0
+            const userIdResult = await ticket.userId(wallet)
+            const userAmountResult = await ticket.userAmount()
+            const maxAttendeeResult = await ticket.MAX_ATTENDEE()
+            const hadTicket = userIdResult[0] > 0
             newState.hadTicket = hadTicket
-            newState.registrationAmount = userAmount[0].toNumber()
+            newState.registrationAmount = userAmountResult[0].toNumber()
+            newState.maxAttendee = maxAttendeeResult[0].toNumber()
           } else {
             newState.hadTicket = false
           }
@@ -76,7 +77,7 @@ class Register extends Component {
   }
 
   registrationEnd () {
-    return this.state.registrationAmount >= LIMIT;
+    return this.state.registrationAmount >= this.state.maxAttendee;
   }
 
   onSend = async () => {
@@ -117,9 +118,6 @@ class Register extends Component {
   }
 
   renderAlert = () => {
-    if (this.registrationEnd()) {
-      return (<AlertHelper state='registration-ended' />);
-    }
     if (!this.state.web3) {
       return (<AlertHelper state='no-web3' />)
     }
@@ -134,6 +132,9 @@ class Register extends Component {
     }
     if (this.state.hadTicket) {
       return (<AlertHelper state='had-ticket' />)
+    }
+    if (this.registrationEnd()) {
+      return (<AlertHelper state='registration-ended' />);
     }
   }
 
@@ -173,7 +174,7 @@ class Register extends Component {
                   this.state.initialized && (
                     <FormGroup>
                       <Label for="registration-amount">{intl.formatMessage({ id: 'Registration Amount' })}</Label>
-                      <Input plaintext name="registration-amount">{this.state.registrationAmount} / {LIMIT}</Input>
+                      <Input plaintext name="registration-amount">{this.state.registrationAmount} / {this.state.maxAttendee}</Input>
                     </FormGroup>
                   )
                 }

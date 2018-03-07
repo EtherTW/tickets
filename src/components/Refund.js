@@ -46,9 +46,9 @@ class Refund extends Component {
           if (wallet) {
             const Ticket = eth.contract(CONTRACT_ABI)
             const ticket = Ticket.at(CONTRACT_ADDRESS)
-            const result = await ticket.userId(wallet)
-            const userId = result[0]
-            const hadTicket = result[0] > 0
+            const userIdResult = await ticket.userId(wallet)
+            const userId = userIdResult[0]
+            const hadTicket = userIdResult[0] > 0
             newState.hadTicket = hadTicket
             const attended = await ticket.isAttend(userId)
             newState.attended = attended[0]
@@ -104,13 +104,18 @@ class Refund extends Component {
       return <AlertHelper state='no-refund' />
     }
     if (this.state.transaction) {
-      return <AlertHelper state='transaction-sent' transaction={this.state.transaction} />
+      return <AlertHelper state='refund-transaction-sent' transaction={this.state.transaction} />
     }
   }
 
   renderAttended() {
     const intl = this.props.intl
-    return intl.formatMessage({ id: this.state.attended ? 'Attened' : 'Not Yet Attended' })
+    return intl.formatMessage({ id: this.state.attended ? 'Attended' : 'Not Yet Attended' })
+  }
+
+  renderRegister() {
+    const intl = this.props.intl
+    return intl.formatMessage({ id: this.state.hadTicket ? 'Registered' : 'Not Yet Registered' })
   }
 
   render() {
@@ -124,8 +129,12 @@ class Refund extends Component {
         <Container className='py-3'>
           <Row>
             <Col sm='12' md={{ size: 8, offset: 2 }}>
-              {this.state.transaction && <p>{intl.formatMessage({ id: 'Transaction' })}: {this.state.transaction}</p>}
-              {this.state.initialized && <p>{intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong></p>}
+              {this.state.initialized && (
+                <div>
+                  <p>{intl.formatMessage({ id: 'Register Status' })}: <strong>{this.renderRegister()}</strong></p>
+                  <p>{intl.formatMessage({ id: 'Event Status' })}: <strong>{this.renderAttended()}</strong></p>
+                </div>
+              )}
               <div>
                 <Form>
                   <Button disabled={!this.state.attended || !this.state.hadTicket || this.state.transaction || !this.state.wallet} className='mt-3' color='primary' onClick={this.onRefund}>

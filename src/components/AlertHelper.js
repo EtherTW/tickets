@@ -24,6 +24,17 @@ class AlertHelper extends Component {
           </Alert>
         );
 
+      case 'refund-transaction-sent':
+        return (
+          <Alert color="success">
+            <FormattedMessage
+              id='Alert Refund Transaction Sent'
+              values={{
+                link: <a href={url} target="_blank" rel="noopener noreferrer">Etherscan</a>
+              }}
+            />
+          </Alert>
+        );
       case 'no-web3':
         return (
           <Alert color="danger">
