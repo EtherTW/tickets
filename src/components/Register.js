@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { injectIntl } from 'react-intl'
-import { Container, Row, Col } from 'reactstrap'
+import { Container, Row, Col, FormText } from 'reactstrap'
 import SectionHeader from './SectionHeader'
 
 import AlertHelper from './AlertHelper'
@@ -30,7 +30,8 @@ class Register extends Component {
       initialized: false,
       validNetwork: false,
       registrationAmount: 0,
-      maxAttendee: 0
+      maxAttendee: 0,
+      fee: FEE
     }
   }
 
@@ -91,7 +92,7 @@ class Register extends Component {
       const transaction = await eth.sendTransaction({
         from: this.state.wallet,
         to: CONTRACT_ADDRESS,
-        value: Eth.toWei(FEE, 'ether'),
+        value: Eth.toWei(this.state.fee, 'ether'),
         gas: GAS_LIMIT,
         gasPrice: GAS_PRICE,
         data: '0x'
@@ -115,6 +116,11 @@ class Register extends Component {
 
   onEmailChange = (event) => {
     this.setState({ email: event.target.value })
+  }
+
+  onFeeChange = (event) => {
+    const fee = Math.max(FEE, event.target.value)
+    this.setState({ fee })
   }
 
   renderAlert = () => {
@@ -161,6 +167,13 @@ class Register extends Component {
                 <FormGroup>
                   <Label for='email'>{intl.formatMessage({ id: 'Email' })}</Label>
                   <Input type='email' name='email' id='email' value={this.state.email || ''} onChange={this.onEmailChange} />
+                </FormGroup>
+                <FormGroup>
+                  <Label for='fee'>{intl.formatMessage({ id: 'Registration Fee' })}</Label>
+                  <Input type='number' name='fee' id='fee' value={this.state.fee} onChange={this.onFeeChange} />
+                  <FormText color="muted">
+                    {intl.formatMessage({ id: 'feeDescription'})}
+                  </FormText>
                 </FormGroup>
                 {
                   this.state.wallet && (

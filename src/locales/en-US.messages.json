@@ -34,5 +34,7 @@
   "Alert Without MetaMask": "You have not yet installed MetaMask. Please go to install {link} and have more than {fee} ETH for the deposit and transaction fee.",
   "Contact Us": "Contract Us",
   "Registration Amount": "Registration Amount",
-  "Registration End": "Registration Ended"
+  "Registration End": "Registration Ended",
+  "Registration Fee": "Registration Fee",
+  "feeDescription": "You can pay more registration fee to support us!"
 }
