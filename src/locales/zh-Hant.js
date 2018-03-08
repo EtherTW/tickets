@@ -5,6 +5,6 @@ export default {
   messages: {
     ...zhhantMessages,
   },
-  locale: 'zh-Hans-CN',
+  locale: 'zh-Hant-TW',
   data: appLocaleData,
 }
