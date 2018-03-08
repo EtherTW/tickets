@@ -25,7 +25,7 @@ contract('test', function(accounts) {
     userAmount = await ticket.userAmount();
     assert.equal(userAmount, 0);
 
-    // user1 get the ticket throught fallback function
+    // user1 get the ticket through the fallback function
     await web3.eth.sendTransaction({ from: user1, to: ticket.address, value: FEE })
 
     // user2 get the ticket, more than FEE would be see as donate
