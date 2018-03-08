@@ -64,11 +64,6 @@ class Header extends Component {
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to="/refund">
-                {intl.formatMessage({ id: 'Refund' })}
-              </NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink href="https://www.facebook.com/messages/t/eth.taipei" target="_blank" rel="noopener noreferrer">
                 {intl.formatMessage({ id: 'Contact Us'})}
               </NavLink>

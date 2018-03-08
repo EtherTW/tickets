@@ -52,7 +52,7 @@ class Register extends Component {
             const ticket = Ticket.at(CONTRACT_ADDRESS)
             const userIdResult = await ticket.userId(wallet)
             const userAmountResult = await ticket.userAmount()
-            const maxAttendeeResult = await ticket.MAX_ATTENDEE()
+            const maxAttendeeResult = await ticket.maxAttendees()
             const hadTicket = userIdResult[0] > 0
             newState.hadTicket = hadTicket
             newState.registrationAmount = userAmountResult[0].toNumber()
