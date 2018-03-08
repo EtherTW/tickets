@@ -11,7 +11,7 @@
   "Topic": "主題",
   "Guests": "來賓",
   "Host": "主持",
-  "registerDescription": "本次報名將使用智能合約 (Smart Contract) 作為報名機制，收取 {deposit} ETH 作為活動費用。在填寫表單前，請先安裝支援 web3 的瀏覽器或延伸套件，桌面版的 Chrome 或 Firefox 請安裝 MetaMask，手機請安裝 Cipher 或 True 後並填寫下面表單。",
+  "registerDescription": "本次報名將使用智能合約 (Smart Contract) 作為報名機制，收取 {fee} ETH 作為活動費用。在填寫表單前，請先安裝支援 web3 的瀏覽器或延伸套件，桌面版的 Chrome 或 Firefox 請安裝 MetaMask，手機請安裝 Cipher 或 True 後並填寫下面表單。",
   "Name / Nickname": "名稱 / 暱稱",
   "Email": "電子郵件",
   "Wallet Address": "錢包地址",
@@ -31,7 +31,7 @@
   "Alert Invalid Network": "請在 MetaMask 上連接到 mainnet。",
   "Alert Transaction Sent": "你的交易已經發送，請到 {link} 查詢交易是否成功。請注意只有交易成功時才代表報名完成，如果您的交易失敗請於 Etherscan 查看原因並且再次報名。",
   "Alert Refund Transaction Sent": "你的交易已經發送，請到 {link} 查詢取回押金的交易是否成功。",
-  "Alert Without MetaMask": "您還沒有安裝 MetaMask，請先到 {link} 安裝並且儲值超過 {deposit} ETH 以支付押金與礦工費用。",
+  "Alert Without MetaMask": "您還沒有安裝 MetaMask，請先到 {link} 安裝並且儲值超過 {fee} ETH 以支付報名費用與礦工費用。",
   "Contact Us": "聯絡我們",
   "Registration Amount": "報名人數",
   "Registration Ended": "報名截止"

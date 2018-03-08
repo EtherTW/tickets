@@ -12,7 +12,7 @@ import {
   CONTRACT_ABI,
   GAS_PRICE,
   GAS_LIMIT,
-  DEPOSIT,
+  FEE,
   NETWORK_ID,
   INTERVAL_TIME,
 } from '../constants'
@@ -91,7 +91,7 @@ class Register extends Component {
       const transaction = await eth.sendTransaction({
         from: this.state.wallet,
         to: CONTRACT_ADDRESS,
-        value: Eth.toWei(DEPOSIT, 'ether'),
+        value: Eth.toWei(FEE, 'ether'),
         gas: GAS_LIMIT,
         gasPrice: GAS_PRICE,
         data: '0x'
@@ -147,7 +147,7 @@ class Register extends Component {
             {intl.formatMessage({ id: 'Register' })}
           </h2>
           <p>
-            {intl.formatMessage({ id: 'registerDescription' }, { deposit: DEPOSIT })}
+            {intl.formatMessage({ id: 'registerDescription' }, { fee: FEE })}
           </p>
         </SectionHeader>
         <Container className='py-3'>

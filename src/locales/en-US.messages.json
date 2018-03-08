@@ -11,7 +11,7 @@
   "Topic": "Topic",
   "Guests": "Guests",
   "Host": "Host",
-  "registerDescription": "Our registration is based on deposit mechanism. We will charge {deposit} ETH as the deposit through smart contract and it will be refunded after the event. Make sure you have installed browsers or extensions which support web3. If you are using desktop browser, you can install MetaMask extension on Chrome / Firefox. If you are using your mobile phone, you can install Cipher or True.",
+  "registerDescription": "Our registration is based on deposit mechanism. We will charge {fee} ETH as the deposit through smart contract and it will be refunded after the event. Make sure you have installed browsers or extensions which support web3. If you are using desktop browser, you can install MetaMask extension on Chrome / Firefox. If you are using your mobile phone, you can install Cipher or True.",
   "Name / Nickname": "Name / Nickname",
   "Email": "Email",
   "Wallet Address": "Wallet Address",
@@ -31,7 +31,7 @@
   "Alert Invalid Network": "Please connect to the mainnet on Metamask.",
   "Alert Transaction Sent": "Your transaction has been sent. Please check the transaction status on {link}. Notice: you get ticket only when transaction is successful, if your transaction is failed please check the reason on Etherscan and register it again.",
   "Alert Refund Transaction Sent": "Your transaction has been sent. Please check the transaction status on {link}",
-  "Alert Without MetaMask": "You have not yet installed MetaMask. Please go to install {link} and have more than {deposit} ETH for the deposit and transaction fee.",
+  "Alert Without MetaMask": "You have not yet installed MetaMask. Please go to install {link} and have more than {fee} ETH for the deposit and transaction fee.",
   "Contact Us": "Contract Us",
   "Registration Amount": "Registration Amount",
   "Registration End": "Registration Ended"

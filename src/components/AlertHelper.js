@@ -4,7 +4,7 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
   ETHERSCAN_URL,
-  DEPOSIT
+  FEE
 } from '../constants';
 
 class AlertHelper extends Component {
@@ -42,7 +42,7 @@ class AlertHelper extends Component {
               id='Alert Without MetaMask'
               values={{
                 link: <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">MetaMask</a>,
-                deposit: DEPOSIT
+                fee: FEE
               }}
             />
           </Alert>
