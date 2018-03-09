@@ -19,7 +19,8 @@ contract('test', function(accounts) {
 
   it("go through all steps", async function() {
     var userAmount;
-    var ticket = await Ticket.new(TEMWallet, 3, {from: admin})
+    var now = Math.floor(Date.now() / 1000);
+    var ticket = await Ticket.new(TEMWallet, 3, now, {from: admin})
     var ticket_balance = await balanceOf(ticket.address)
 
     userAmount = await ticket.userAmount();
