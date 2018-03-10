@@ -5,6 +5,7 @@ import { injectIntl } from 'react-intl'
 import { Container } from 'reactstrap';
 import SectionHeader from './SectionHeader';
 import Logo from './assets/logo.png';
+import { FEE } from '../constants';
 
 class Home extends Component {
   render () {
@@ -27,7 +28,27 @@ class Home extends Component {
         </SectionHeader>
         <Container className='py-3'>
           <p>{intl.formatMessage({ id: 'eventPayment' })}</p>
-          <p>{intl.formatMessage({ id: 'eventDate' })}</p>
+          <p>
+            <ul>
+              <li>
+                {intl.formatMessage({ id: 'eventDateLabel' })}:&nbsp;
+                {intl.formatMessage({ id: 'eventDate'})}
+              </li>
+              <li>
+                {intl.formatMessage({ id: 'LocationLabel' })}:&nbsp;
+                <a
+                  target="_blank" rel="noopener noreferrer"
+                  href={intl.formatMessage({ id: 'Location Google Maps' })}>
+                  {intl.formatMessage({ id: 'LocationAddress'})}
+                </a>
+              </li>
+              <li>
+                {intl.formatMessage({ id: 'eventRegistrationFeeLabel' }, { fee: FEE })}:&nbsp;
+                {intl.formatMessage({ id: 'eventRegistrationFee'}, {fee: FEE})}
+              </li>
+            </ul>
+          </p>
+          <h3>{intl.formatMessage({ id: 'Agenda'})}</h3>
           <Table>
             <thead>
               <tr>
