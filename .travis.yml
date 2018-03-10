@@ -8,6 +8,8 @@ cache: yarn
 
 deploy:
   provider: pages
+  edge:
+    branch: pages-ivar-set
   local-dir: build
   skip-cleanup: true
   github-token: $TEM_TICKETS_GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
