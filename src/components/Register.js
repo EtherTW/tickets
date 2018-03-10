@@ -42,8 +42,7 @@ class Register extends Component {
         const web3 = window.web3
         newState.web3 = web3
         if (web3) {
-          const networkId = web3.version.network
-          newState.validNetwork = (networkId === NETWORK_ID)
+          newState.validNetwork = (web3.networkId === NETWORK_ID)
           const eth = new Eth(window.web3.currentProvider)
           const accounts = await eth.accounts()
           const wallet = accounts[0]

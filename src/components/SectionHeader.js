@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import backgroundImage from './assets/background.png';
 
 export default class SectionHeader extends Component {
@@ -18,8 +18,12 @@ export default class SectionHeader extends Component {
           marginBottom: '24px',
         }}
       >
-        <Container className='py-3'>
-          {this.props.children}
+        <Container>
+          <Row>
+            <Col sm='12' md={{ size: 8, offset: 2 }}>
+              {this.props.children}
+            </Col>
+          </Row>
         </Container>
       </div>
     )
