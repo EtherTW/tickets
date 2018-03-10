@@ -17,7 +17,7 @@ import {
 } from 'reactstrap';
 
 import Logo from './assets/logo.png';
-import { PRODUCTION } from '../constants';
+import { NETWORK_NAME } from '../constants';
 
 class Header extends Component {
   constructor (props) {
@@ -44,7 +44,7 @@ class Header extends Component {
   }
 
   renderNetwork () {
-    return <Badge color="primary">{PRODUCTION ? 'Mainnet' : 'Ropsten'}</Badge>
+    return <Badge color="primary">{NETWORK_NAME}</Badge>
   }
 
   render () {

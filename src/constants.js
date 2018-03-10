@@ -12,6 +12,7 @@ export const INTERVAL_TIME = 1000;
 export const PRODUCTION = false;
 
 export const NETWORK_ID = PRODUCTION ? '1' : '3'; // 1 = mainnet, 3 = ropsten
+export const NETWORK_NAME = PRODUCTION ? 'Mainnet' : 'Ropsten';
 export const ETHERSCAN_URL = PRODUCTION ?
   'https://etherscan.io' :
   'https://ropsten.etherscan.io';

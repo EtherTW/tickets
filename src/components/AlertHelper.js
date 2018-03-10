@@ -4,7 +4,8 @@ import { injectIntl, FormattedMessage } from 'react-intl'
 
 import {
   ETHERSCAN_URL,
-  FEE
+  FEE,
+  NETWORK_NAME
 } from '../constants';
 
 class AlertHelper extends Component {
@@ -78,7 +79,7 @@ class AlertHelper extends Component {
       case 'invalid-network':
         return (
           <Alert color="danger">
-            {intl.formatMessage({ id: 'Alert Invalid Network' })}
+            {intl.formatMessage({id: 'Alert Invalid Network'},{ networkName: NETWORK_NAME})}
           </Alert>
         )
 
