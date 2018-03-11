@@ -35,7 +35,7 @@ class Home extends Component {
         </SectionHeader>
         <Container className='py-3'>
           <p>{intl.formatMessage({ id: 'eventPayment' })}</p>
-          <ul>
+          <ul className="event-details">
             <li>
               <strong>{intl.formatMessage({ id: 'eventDateLabel' })}</strong>:&nbsp;
                 {intl.formatMessage({ id: 'eventDate' })}

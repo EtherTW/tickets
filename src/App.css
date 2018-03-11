@@ -10,3 +10,7 @@ table.table {
 .section-header p {
   color: #ffffff;
 }
+
+.event-details {
+  line-height: 190%;
+}
