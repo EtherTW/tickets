@@ -71,8 +71,8 @@ class Home extends Component {
               <tr>
                 <td>19:00 - 19:30</td>
                 <td>Networking</td>
-                <td>-</td>
-                <td>-</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>19:30 - 20:10</td>
@@ -83,13 +83,20 @@ class Home extends Component {
               <tr>
                 <td>20:10 - 20:25</td>
                 <td>Break</td>
-                <td>-</td>
-                <td>-</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>20:25 - 21:05</td>
                 <td>Panel 2: Ethereum Research Work</td>
-                <td>TBD</td>
+                <td>
+                  <ul>
+                    <li>Vitalik Buterin (Ethereum Foundation, co-founder)</li>
+                    <li>Vlad Zamfir (Ethereum Foundation, Casper CBC Lead)</li>
+                    <li>Justin Drake (Ethereum Foundation, Sharding Researcher)</li>
+                    <li>Philip Daian (IC3, Hydra Project 	&amp; hackthiscontract.io Lead)</li>
+                  </ul>
+                </td>
                 <td><a href="https://twitter.com/karl_dot_tech" target="_blank" rel="noopener noreferrer">Karl Floersch</a></td>
               </tr>
             </tbody>
