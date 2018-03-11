@@ -13,6 +13,8 @@
   "Location Google Maps": "https://www.google.com/maps/place/GIS+TAIPEI+TECH+Convention+Center/@25.0420753,121.5361051,17z/data=!3m1!4b1!4m5!3m4!1s0x3442a97d14c16483:0xad114637e061ac57!8m2!3d25.0420753!4d121.5382938?hl=en",
   "eventRegistrationFeeLabel": "Registration Fee",
   "eventRegistrationFee": "{fee} ETH, you can pay more as donation to support us :)",
+  "eventRegistrationDate": "Registration Time",
+  "noon": "noon",
   "Time": "Time",
   "Topic": "Topic",
   "Guests": "Guests",
@@ -42,5 +44,6 @@
   "Registration Amount": "Registration Amount",
   "Registration End": "Registration Ended",
   "Registration Fee": "Registration Fee",
-  "feeDescription": "You can pay more registration fee to support us!"
+  "feeDescription": "You can pay more registration fee to support us!",
+  "Not Yet Begun": "Event registration is not yet begun, please wait until {startTime}"
 }

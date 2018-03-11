@@ -7,6 +7,9 @@ export const GAS_LIMIT = 100000;
 export const FEE = 0.015;
 export const INTERVAL_TIME = 1000;
 
+// Tue Mar 13 2018 12:00:00 GMT+0800 (CST)
+export const REGISTRATION_TIME = 1520913600000;
+
 // When you change it please make sure you also set production on firebase by
 // firebase functions:config:set general.production="1"
 export const PRODUCTION = false;

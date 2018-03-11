@@ -5,6 +5,8 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import { injectIntl } from 'react-intl'
 import { Container, Row, Col, FormText } from 'reactstrap'
 import SectionHeader from './SectionHeader'
+import moment from 'moment';
+import 'moment/locale/zh-tw';
 
 import AlertHelper from './AlertHelper'
 import {
@@ -15,7 +17,11 @@ import {
   FEE,
   NETWORK_ID,
   INTERVAL_TIME,
+  REGISTRATION_TIME
 } from '../constants'
+
+const MOMENT_LANG = localStorage.getItem('lang') === 'en' ? 'en' : 'zh-tw';
+moment.locale(MOMENT_LANG);
 
 class Register extends Component {
   constructor(props) {
@@ -30,7 +36,7 @@ class Register extends Component {
       initialized: false,
       validNetwork: false,
       registrationAmount: 0,
-      maxAttendee: 0,
+      maxAttendee: 100,
       fee: FEE
     }
   }
@@ -145,6 +151,14 @@ class Register extends Component {
 
   render() {
     const intl = this.props.intl
+    const notYet = Date.now() <= REGISTRATION_TIME
+    let notYetAlert;
+
+    if (notYet) {
+      const startTime = moment(REGISTRATION_TIME).format('llll');
+      notYetAlert = <AlertHelper state='not-yet-begun' startTime={startTime} />;
+    };
+
     return (
       <div>
         <SectionHeader>
@@ -156,6 +170,11 @@ class Register extends Component {
           </p>
         </SectionHeader>
         <Container className='py-3'>
+          <Row>
+            <Col sm='12' md={{ size: 8, offset: 2 }}>
+              {notYetAlert}
+            </Col>
+          </Row>
           <Row>
             <Col sm='12' md={{ size: 8, offset: 2 }}>
               <Form>
@@ -191,7 +210,7 @@ class Register extends Component {
                   )
                 }
               </Form>
-              <Button disabled={this.registrationEnd() || this.state.hadTicket || !this.state.wallet || this.state.transaction || !this.state.validNetwork} color='primary' onClick={this.onSend}>
+              <Button disabled={notYet || this.registrationEnd() || this.state.hadTicket || !this.state.wallet || this.state.transaction || !this.state.validNetwork} color='primary' onClick={this.onSend}>
                 {intl.formatMessage({ id: 'Register With MetaMask' })}
               </Button>
               <div className='my-3'>

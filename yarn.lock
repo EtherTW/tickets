@@ -4856,6 +4856,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdi
   dependencies:
     minimist "0.0.8"
 
+moment@^2.21.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -5935,6 +5939,13 @@ react-error-overlay@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.0.tgz#d198408a85b4070937a98667f500c832f86bd5d4"
 
+react-firebaseui@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/react-firebaseui/-/react-firebaseui-1.1.8.tgz#67a26eb281cb81102cf975f7ffc5adfdb36f5391"
+  dependencies:
+    firebaseui "^2.4"
+    react "^15"
+
 react-intl@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.4.0.tgz#66c14dc9df9a73b2fbbfbd6021726e80a613eb15"
@@ -5943,12 +5954,6 @@ react-intl@^2.4.0:
     intl-messageformat "^2.1.0"
     intl-relativeformat "^2.0.0"
     invariant "^2.1.1"
-react-firebaseui@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/react-firebaseui/-/react-firebaseui-1.1.8.tgz#67a26eb281cb81102cf975f7ffc5adfdb36f5391"
-  dependencies:
-    firebaseui "^2.4"
-    react "^15"
 
 react-popper@0.8.1:
   version "0.8.1"

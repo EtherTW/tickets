@@ -3,12 +3,19 @@ import { Link } from "react-router-dom";
 import { Table, Button } from 'reactstrap';
 import { injectIntl } from 'react-intl'
 import { Container } from 'reactstrap';
+import moment from 'moment';
+import 'moment/locale/zh-tw';
+
 import SectionHeader from './SectionHeader';
 import Logo from './assets/logo.png';
-import { FEE } from '../constants';
+import { FEE, REGISTRATION_TIME } from '../constants';
+
+const MOMENT_LANG = localStorage.getItem('lang') === 'en' ? 'en' : 'zh-tw';
+moment.locale(MOMENT_LANG);
 
 class Home extends Component {
   render () {
+    const registrationTime = moment(REGISTRATION_TIME).format('llll');
     const intl = this.props.intl
     return (
       <div>
@@ -28,26 +35,28 @@ class Home extends Component {
         </SectionHeader>
         <Container className='py-3'>
           <p>{intl.formatMessage({ id: 'eventPayment' })}</p>
-          <p>
-            <ul>
-              <li>
-                {intl.formatMessage({ id: 'eventDateLabel' })}:&nbsp;
-                {intl.formatMessage({ id: 'eventDate'})}
-              </li>
-              <li>
-                {intl.formatMessage({ id: 'LocationLabel' })}:&nbsp;
+          <ul>
+            <li>
+              <strong>{intl.formatMessage({ id: 'eventDateLabel' })}</strong>:&nbsp;
+                {intl.formatMessage({ id: 'eventDate' })}
+            </li>
+            <li>
+              <strong>{intl.formatMessage({ id: 'LocationLabel' })}</strong>:&nbsp;
                 <a
-                  target="_blank" rel="noopener noreferrer"
-                  href={intl.formatMessage({ id: 'Location Google Maps' })}>
-                  {intl.formatMessage({ id: 'LocationAddress'})}
-                </a>
-              </li>
-              <li>
-                {intl.formatMessage({ id: 'eventRegistrationFeeLabel' }, { fee: FEE })}:&nbsp;
-                {intl.formatMessage({ id: 'eventRegistrationFee'}, {fee: FEE})}
-              </li>
-            </ul>
-          </p>
+                target="_blank" rel="noopener noreferrer"
+                href={intl.formatMessage({ id: 'Location Google Maps' })}>
+                {intl.formatMessage({ id: 'LocationAddress' })}
+              </a>
+            </li>
+            <li>
+              <strong>{intl.formatMessage({ id: 'eventRegistrationFeeLabel' }, { fee: FEE })}</strong>:&nbsp;
+                {intl.formatMessage({ id: 'eventRegistrationFee' }, { fee: FEE })}
+            </li>
+            <li>
+              <strong>{intl.formatMessage({ id: 'eventRegistrationDate' })}</strong>:&nbsp;
+                {registrationTime} ({intl.formatMessage({id: 'noon'})})
+            </li>
+          </ul>
           <h3>{intl.formatMessage({ id: 'Agenda'})}</h3>
           <Table>
             <thead>

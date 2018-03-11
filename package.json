@@ -7,10 +7,11 @@
     "bootstrap": "^4.0.0",
     "ethjs": "^0.3.3",
     "firebase": "^4.10.1",
+    "moment": "^2.21.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-intl": "^2.4.0",
     "react-firebaseui": "^1.1.8",
+    "react-intl": "^2.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "reactstrap": "^5.0.0-beta.2"

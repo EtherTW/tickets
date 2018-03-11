@@ -89,6 +89,12 @@ class AlertHelper extends Component {
             {intl.formatMessage({ id: 'Registration Ended'})}
           </Alert>
         )
+      case 'not-yet-begun':
+        return (
+          <Alert color="info">
+            {intl.formatMessage({ id: 'Not Yet Begun' }, {startTime: this.props.startTime})}
+          </Alert>
+        )
       default:
         return null;
     }
