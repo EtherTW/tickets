@@ -19,7 +19,7 @@
   "Topic": "Topic",
   "Guests": "Guests",
   "Host": "Host",
-  "registerDescription": "Our registration payment system is built on Ethereum Smart Contract. We will charge {fee} ETH as the registration fee. Make sure you have installed browsers or extensions which support web3. If you are using desktop browser, you can install MetaMask extension on Chrome / Firefox. If you are using your mobile phone, you can install Cipher or True.",
+  "registerDescription": "Our registration payment system is built on Ethereum Smart Contract. We will charge {fee} ETH as the registration fee. Make sure you have installed browsers or extensions which support web3. If you are using desktop browser, you can install MetaMask extension on Chrome / Firefox. If you are using your mobile phone, you can install Cipher or Trust.",
   "Name / Nickname": "Name / Nickname",
   "Email": "Email",
   "Wallet Address": "Wallet Address",

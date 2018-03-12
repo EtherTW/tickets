@@ -19,7 +19,7 @@
   "Topic": "主題",
   "Guests": "來賓",
   "Host": "主持",
-  "registerDescription": "本次報名將使用智能合約 (Smart Contract) 作為報名機制，收取 {fee} ETH 作為活動費用。在填寫表單前，請先安裝支援 web3 的瀏覽器或延伸套件，桌面版的 Chrome 或 Firefox 請安裝 MetaMask，手機請安裝 Cipher 或 True 後並填寫下面表單。",
+  "registerDescription": "本次報名將使用智能合約 (Smart Contract) 作為報名機制，收取 {fee} ETH 作為活動費用。在填寫表單前，請先安裝支援 web3 的瀏覽器或延伸套件，桌面版的 Chrome 或 Firefox 請安裝 MetaMask，手機請安裝 Cipher 或 Trust 後並填寫下面表單。",
   "Name / Nickname": "名稱 / 暱稱",
   "Email": "電子郵件",
   "Wallet Address": "錢包地址",
