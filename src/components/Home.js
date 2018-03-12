@@ -56,6 +56,14 @@ class Home extends Component {
               <strong>{intl.formatMessage({ id: 'eventRegistrationDate' })}</strong>:&nbsp;
                 {registrationTime} ({intl.formatMessage({id: 'noon'})})
             </li>
+            <li>
+              <strong>{intl.formatMessage({ id: 'live stream' })}</strong>:&nbsp;
+              <a
+              target="_blank" rel="noopener noreferrer"
+              href="https://youtu.be/ilsjZAtUUvQ">
+                https://youtu.be/ilsjZAtUUvQ
+              </a>
+            </li>
           </ul>
           <h3>{intl.formatMessage({ id: 'Agenda'})}</h3>
           <Table>

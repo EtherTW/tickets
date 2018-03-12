@@ -45,5 +45,6 @@
   "Registration End": "Registration Ended",
   "Registration Fee": "Registration Fee",
   "feeDescription": "You can pay more registration fee to support us!",
-  "Not Yet Begun": "Event registration is not yet begun, please wait until {startTime}"
+  "Not Yet Begun": "Event registration is not yet begun, please wait until {startTime}",
+  "live stream": "Live Stream"
 }

@@ -45,5 +45,6 @@
   "Registration Ended": "報名截止",
   "Registration Fee": "報名費用",
   "feeDescription": "你可以支付更多的報名費來支持我們的活動！",
-  "Not Yet Begun": "活動報名尚未開始，開始時間為 {startTime}。"
+  "Not Yet Begun": "活動報名尚未開始，開始時間為 {startTime}。",
+  "live stream": "直播"
 }
