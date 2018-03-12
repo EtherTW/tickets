@@ -9,7 +9,7 @@
   "eventDateLabel": "時間",
   "eventDate": "2018 年 3 月 21 日 7pm - 9:10pm",
   "LocationLabel": "地點",
-  "LocationAddress": "台北市忠孝東路三段 1 號 (億光大樓 2~3 樓)",
+  "LocationAddress": "集思北科大會議中心 - 台北市忠孝東路三段 1 號 (億光大樓 2~3 樓)",
   "Location Google Maps": "https://www.google.com/maps/place/%E9%9B%86%E6%80%9D%E5%8C%97%E7%A7%91%E5%A4%A7%E6%9C%83%E8%AD%B0%E4%B8%AD%E5%BF%83/@25.0420753,121.5382938,15z/data=!4m5!3m4!1s0x0:0xad114637e061ac57!8m2!3d25.0420753!4d121.5382938?sa=X&ved=0ahUKEwjCv--W-OHZAhXBbrwKHQSVCd4Q_BIIuQEwCg",
   "eventRegistrationFeeLabel": "報名費",
   "eventRegistrationFee": "{fee} ETH，你可以支付更多報名費用來支持我們 :)",
