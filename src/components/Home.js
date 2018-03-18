@@ -85,8 +85,16 @@ class Home extends Component {
               <tr>
                 <td>19:30 - 20:10</td>
                 <td>Panel 1: Sharding Clients</td>
-                <td>TBD</td>
-                <td><a href="https://twitter.com/karl_dot_tech" target="_blank" rel="noopener noreferrer">Karl Floersch</a></td>
+                <td>
+                  <ul>
+                    <li>Piper Merriam (Ethereum Foundation, Trinity, Py-EVM)</li>
+                    <li>Fredrik Harrysson (ParityTech, Parity)</li>
+                    <li>Raul Jordan (Prysmatic Labs, geth-sharding)</li>
+                    <li>Jacek Sieka (Status, Nimbus)</li>
+                    <li>TBD (ConsenSys, PegaSys)</li>
+                  </ul>
+                </td>
+                <td>Karl Floersch</td>
               </tr>
               <tr>
                 <td>20:10 - 20:25</td>
@@ -103,9 +111,10 @@ class Home extends Component {
                     <li>Vlad Zamfir (Ethereum Foundation, Casper CBC Lead)</li>
                     <li>Justin Drake (Ethereum Foundation, Sharding Researcher)</li>
                     <li>Philip Daian (IC3, Hydra Project 	&amp; hackthiscontract.io Lead)</li>
+                    <li>Robert Habermeier (ParityTech, Parity Lead Developer)</li>
                   </ul>
                 </td>
-                <td><a href="https://twitter.com/karl_dot_tech" target="_blank" rel="noopener noreferrer">Karl Floersch</a></td>
+                <td>Karl Floersch</td>
               </tr>
             </tbody>
           </Table>
