@@ -1,3 +1,4 @@
+import Eth from 'ethjs'
 import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
@@ -36,6 +37,11 @@ class Admin extends Component {
         if (signedIn) {
           firebase.database().ref('users').on('value', (snapshot) => {
             const users = snapshot.val() || {};
+            Object.keys(users).forEach(uid => {
+              if (this.state.users[uid]) {
+                users[uid].transactionSuccess = this.state.users[uid].transactionSuccess;
+              }
+            });
             this.setState({ users });
           });
         }
@@ -50,6 +56,23 @@ class Admin extends Component {
     firebase.database().ref().update(updated);
   }
 
+  updateTransaction = () => {
+    if (window.web3) {
+      const eth = new Eth(window.web3.currentProvider)
+
+      Object.keys(this.state.users).forEach(async(uid) => {
+        const users = { ...this.state.users };
+        const user = users[uid];
+        const result = await eth.getTransactionReceipt(user.transaction);
+        if (result) {
+          user.transactionSuccess = result.status;
+          users[uid] = {...user};
+          this.setState({users});
+        }
+      })
+    }
+  }
+
   renderUsersTable () {
     const users = [];
     Object.keys(this.state.users).forEach(uid => {
@@ -58,13 +81,15 @@ class Admin extends Component {
       users.push(user);
     });
 
-    const rows = users.map(user => {
+    const rows = users.map((user, i) => {
       const walletUrl = `${ETHERSCAN_URL}/address/${user.wallet}`;
       const transactionUrl = `${ETHERSCAN_URL}/tx/${user.transaction}`;
       const attended = user.attended ? '✓' : '';
+      const transactionSuccess = user.transactionSuccess === '0x1' ? '✓': '';
       return (
-        <tr key={user.wallet}>
+        <tr key={`${user.wallet}-${i}`}>
           <td className="text-center">{attended}</td>
+          <td className="text-center">{transactionSuccess}</td>
           <td><a href={walletUrl} target="_blank" rel="noopener noreferrer">{user.wallet.substr(0, 10)}...</a></td>
           <td>{user.name}</td>
           <td>{user.email}</td>
@@ -84,6 +109,7 @@ class Admin extends Component {
         <thead>
           <tr>
             <th>出席狀況</th>
+            <th>交易</th>
             <th>錢包地址</th>
             <th>名字</th>
             <th>電子郵件</th>
@@ -109,6 +135,9 @@ class Admin extends Component {
     } else {
       return (
         <div className="container">
+          <div>
+            <Button color="primary" onClick={this.updateTransaction}>Get Transactions</Button>
+          </div>
           {this.renderUsersTable()}
           <div className="my-3 text-center">
             <Button color="primary" onClick={() => firebase.auth().signOut()}>登出</Button>
