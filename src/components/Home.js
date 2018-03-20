@@ -91,7 +91,7 @@ class Home extends Component {
                     <li>Fredrik Harrysson (ParityTech, Parity)</li>
                     <li>Raul Jordan (Prysmatic Labs, geth-sharding)</li>
                     <li>Jacek Sieka (Status, Nimbus)</li>
-                    <li>TBD (ConsenSys, PegaSys)</li>
+                    <li>Ben Edgington (ConsenSys, PegaSys)</li>
                   </ul>
                 </td>
                 <td>Karl Floersch</td>
