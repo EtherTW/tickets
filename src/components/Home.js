@@ -112,6 +112,7 @@ class Home extends Component {
                     <li>Justin Drake (Ethereum Foundation, Sharding Researcher)</li>
                     <li>Philip Daian (IC3, Hydra Project 	&amp; hackthiscontract.io Lead)</li>
                     <li>Robert Habermeier (ParityTech, Parity Lead Developer)</li>
+                    <li>Jon Choi (Ethereum Foundation)</li>
                   </ul>
                 </td>
                 <td>Karl Floersch</td>
