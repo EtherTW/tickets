@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import { Table, Button, ButtonGroup  } from 'reactstrap';
+import saveAs from 'save-as'
 
 import {
   ETHERSCAN_URL
@@ -73,6 +74,18 @@ class Admin extends Component {
     }
   }
 
+  downloadCSV = () => {
+    const output = ['"出席狀況","交易成功","錢包位址","名字","電子郵件","交易地址"'];
+    Object.keys(this.state.users).forEach(uid => {
+      const user = this.state.users[uid];
+      const transactionSuccess = user.transactionSuccess === '0x1' ? '✓' : '';
+      output.push(`"","${transactionSuccess}","${user.wallet}","${user.name}","${user.email}","${user.transaction}"`);
+    });
+
+    const blob = new Blob([output.join('\n')], {type: "text/plain;charset=utf-8"});
+    saveAs(blob, 'attendees.csv');
+  }
+
   renderUsersTable () {
     const users = [];
     Object.keys(this.state.users).forEach(uid => {
@@ -135,8 +148,9 @@ class Admin extends Component {
     } else {
       return (
         <div className="container">
-          <div>
+          <div className="my-3">
             <Button color="primary" onClick={this.updateTransaction}>Get Transactions</Button>
+            <Button color="primary" onClick={this.downloadCSV}>Download CSV</Button>
           </div>
           {this.renderUsersTable()}
           <div className="my-3 text-center">

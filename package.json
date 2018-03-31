@@ -14,7 +14,8 @@
     "react-intl": "^2.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
-    "reactstrap": "^5.0.0-beta.2"
+    "reactstrap": "^5.0.0-beta.2",
+    "save-as": "^0.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
